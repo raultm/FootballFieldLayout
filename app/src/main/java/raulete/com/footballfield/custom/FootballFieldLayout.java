@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RemoteViews;
 
+import java.util.BitSet;
+
 /**
  * Example of writing a custom layout manager.  This is a fairly full-featured
  * layout manager that is relatively general, handling all layout cases.  You
@@ -53,6 +55,8 @@ import android.widget.RemoteViews;
  */
 @RemoteViews.RemoteView
 public class FootballFieldLayout extends ViewGroup {
+
+    private FieldPlayerCollection fieldPlayers = new FieldPlayerCollection();
 
     public FootballFieldLayout(Context context) {
         super(context);
@@ -113,22 +117,15 @@ public class FootballFieldLayout extends ViewGroup {
                 final int width = child.getMeasuredWidth();
                 final int height = child.getMeasuredHeight();
 
-                // Compute the frame in which we are placing this child.
-                if (lp.position == LayoutParams.POSITION_LEFT) {
-                    mTmpContainerRect.left = leftPos + lp.leftMargin;
-                    mTmpContainerRect.right = leftPos + width + lp.rightMargin;
-                    leftPos = mTmpContainerRect.right;
-                } else if (lp.position == LayoutParams.POSITION_RIGHT) {
-                    mTmpContainerRect.right = rightPos - lp.rightMargin;
-                    mTmpContainerRect.left = rightPos - width - lp.leftMargin;
-                    rightPos = mTmpContainerRect.left;
-                }
+                mTmpContainerRect.left = leftPos + lp.leftMargin;
+                mTmpContainerRect.right = leftPos + width + lp.rightMargin;
+                leftPos = mTmpContainerRect.right;
                 mTmpContainerRect.top = parentTop + lp.topMargin;
                 mTmpContainerRect.bottom = parentBottom - lp.bottomMargin;
 
                 // Use the child's gravity and size to determine its final
                 // frame within its container.
-                Gravity.apply(lp.gravity, width, height, mTmpContainerRect, mTmpChildRect);
+                Gravity.apply(Gravity.TOP | Gravity.START, width, height, mTmpContainerRect, mTmpChildRect);
 
                 // Place the child.
                 child.layout(mTmpChildRect.left, mTmpChildRect.top,
@@ -160,6 +157,10 @@ public class FootballFieldLayout extends ViewGroup {
     @Override
     protected boolean checkLayoutParams(ViewGroup.LayoutParams p) {
         return p instanceof LayoutParams;
+    }
+
+    public FieldPlayerCollection getFieldPlayers() {
+        return fieldPlayers;
     }
 
     /**
