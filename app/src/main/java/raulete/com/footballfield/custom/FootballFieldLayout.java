@@ -163,6 +163,10 @@ public class FootballFieldLayout extends ViewGroup {
         return fieldPlayers;
     }
 
+    public void linkFieldPlayerCollection(FieldPlayerCollection fpc) {
+        fieldPlayers = fpc;
+    }
+
     /**
      * Custom per-child layout information.
      */

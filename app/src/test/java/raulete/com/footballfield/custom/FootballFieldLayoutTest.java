@@ -11,22 +11,35 @@ import static org.junit.Assert.*;
  * Created by raulete on 8/11/16.
  */
 public class FootballFieldLayoutTest {
-    @Before
-    public void setUp() throws Exception {
 
+    FootballFieldLayout ffl;
+
+    @Before
+    public void setUp() throws Exception
+    {
+        ffl = new FootballFieldLayout(null);
     }
 
     @After
-    public void tearDown() throws Exception {
-
+    public void tearDown() throws Exception
+    {
+        ffl = null;
     }
 
     @Test
     public void byDefaultHasZeroFieldPlayers() throws Exception
     {
-        FootballFieldLayout ffl = new FootballFieldLayout(null);
-
         assertThat(ffl.getFieldPlayers().size(), equalTo(0));
+    }
+
+    @Test
+    public void canLinkAFieldPlayerCollection() throws Exception
+    {
+        FieldPlayerCollection fpc = new FieldPlayerCollection();
+
+        ffl.linkFieldPlayerCollection(fpc);
+
+        assertThat(ffl.getFieldPlayers(), equalTo(fpc));
     }
 
 }
