@@ -47,4 +47,18 @@ public class FootballFieldLayoutTest {
         assertThat(ffl.getFieldPlayers(), equalTo(fpc));
     }
 
+    @Test
+    public void respondsWhenAFieldPlayerIsAddedToCollection() throws Exception
+    {
+        FootballFieldLayout ffl = Mockito.mock(FootballFieldLayout.class, Mockito.CALLS_REAL_METHODS);
+
+        FieldPlayerCollection fpc = new FieldPlayerCollection();
+
+        ffl.linkFieldPlayerCollection(fpc);
+
+        fpc.add(Mockito.mock(FieldPlayer.class));
+
+        verify(ffl, times(1)).collectionsChanges();
+    }
+
 }

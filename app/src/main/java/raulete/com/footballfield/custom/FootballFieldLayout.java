@@ -167,6 +167,10 @@ public class FootballFieldLayout extends ViewGroup {
         fieldPlayers = fpc;
     }
 
+    public void collectionsChanges() {
+        
+    }
+
     /**
      * Custom per-child layout information.
      */
