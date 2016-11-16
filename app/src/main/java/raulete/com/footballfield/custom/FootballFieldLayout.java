@@ -54,7 +54,7 @@ import java.util.BitSet;
  * |___________|
  */
 @RemoteViews.RemoteView
-public class FootballFieldLayout extends ViewGroup {
+public class FootballFieldLayout extends ViewGroup implements FieldPlayerCollection.OnChangesListener{
 
     private FieldPlayerCollection fieldPlayers = new FieldPlayerCollection();
 
@@ -164,11 +164,17 @@ public class FootballFieldLayout extends ViewGroup {
     }
 
     public void linkFieldPlayerCollection(FieldPlayerCollection fpc) {
+        fpc.addListener(this);
         fieldPlayers = fpc;
     }
 
     public void collectionsChanges() {
-        
+
+    }
+
+    @Override
+    public void change(FieldPlayerCollection fpc) {
+        collectionsChanges();
     }
 
     /**
