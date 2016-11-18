@@ -5,4 +5,8 @@ package raulete.com.footballfield.custom;
  */
 public interface FieldPlayer {
     boolean isPositioned();
+
+    String getNumber();
+
+    String getShortName();
 }

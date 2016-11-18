@@ -10,6 +10,8 @@ import android.widget.RemoteViews;
 
 import java.util.BitSet;
 
+import raulete.com.footballfield.R;
+
 /**
  * Example of writing a custom layout manager.  This is a fairly full-featured
  * layout manager that is relatively general, handling all layout cases.  You
@@ -68,6 +70,7 @@ public class FootballFieldLayout extends ViewGroup implements FieldPlayerCollect
 
     public FootballFieldLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        setBackgroundResource(R.mipmap.football_field);
     }
 
     /**
@@ -166,10 +169,15 @@ public class FootballFieldLayout extends ViewGroup implements FieldPlayerCollect
     public void linkFieldPlayerCollection(FieldPlayerCollection fpc) {
         fpc.addListener(this);
         fieldPlayers = fpc;
+        collectionsChanges();
     }
 
     public void collectionsChanges() {
-
+        removeAllViews();
+        for(FieldPlayer fieldPlayer : getFieldPlayers().list)
+        {
+            addView(new FieldPlayerView(getContext(), fieldPlayer));
+        }
     }
 
     @Override
