@@ -23,6 +23,7 @@ public class FieldPlayerView extends RelativeLayout {
 
     private void addName(String shortName) {
         TextView tv = new TextView(getContext());
+        addView(tv);
         RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) tv.getLayoutParams();
 
         layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
@@ -37,11 +38,13 @@ public class FieldPlayerView extends RelativeLayout {
         tv.setBackgroundColor(Color.parseColor("#000000"));
         tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 8);
 
-        addView(tv);
+
     }
 
     private void addNumber(String number) {
         TextView tv = new TextView(getContext());
+        addView(tv);
+
         RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) tv.getLayoutParams();
 
         layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
@@ -54,7 +57,7 @@ public class FieldPlayerView extends RelativeLayout {
         tv.setGravity(Gravity.CENTER);
         tv.setBackgroundColor(Color.parseColor("#66000000"));
 
-        addView(tv);
+
     }
 
     private int dip2px(int dips) {

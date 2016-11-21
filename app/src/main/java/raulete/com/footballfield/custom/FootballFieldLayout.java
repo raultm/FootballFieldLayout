@@ -3,9 +3,11 @@ package raulete.com.footballfield.custom;
 import android.content.Context;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.RemoteViews;
 
 import java.util.BitSet;
@@ -56,7 +58,7 @@ import raulete.com.footballfield.R;
  * |___________|
  */
 @RemoteViews.RemoteView
-public class FootballFieldLayout extends ViewGroup implements FieldPlayerCollection.OnChangesListener{
+public class FootballFieldLayout extends RelativeLayout implements FieldPlayerCollection.OnChangesListener{
 
     private FieldPlayerCollection fieldPlayers = new FieldPlayerCollection();
 
@@ -88,10 +90,12 @@ public class FootballFieldLayout extends ViewGroup implements FieldPlayerCollect
      *
 
      */
+    /*
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
+    */
 
     /** These are used for computing child frames based on their gravity. */
     private final Rect mTmpContainerRect = new Rect();
@@ -99,7 +103,7 @@ public class FootballFieldLayout extends ViewGroup implements FieldPlayerCollect
 
     /**
      * Position all children within this layout.
-     */
+
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         final int count = getChildCount();
@@ -135,32 +139,22 @@ public class FootballFieldLayout extends ViewGroup implements FieldPlayerCollect
                         mTmpChildRect.right, mTmpChildRect.bottom);
             }
         }
+
     }
+*/
 
     // ----------------------------------------------------------------------
     // The rest of the implementation is for custom per-child layout parameters.
     // If you do not need these (for example you are writing a layout manager
     // that does fixed positioning of its children), you can drop all of this.
 
+    /*
     @Override
     public LayoutParams generateLayoutParams(AttributeSet attrs) {
         return new FootballFieldLayout.LayoutParams(getContext(), attrs);
     }
+*/
 
-    @Override
-    protected LayoutParams generateDefaultLayoutParams() {
-        return new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-    }
-
-    @Override
-    protected ViewGroup.LayoutParams generateLayoutParams(ViewGroup.LayoutParams p) {
-        return new LayoutParams(p);
-    }
-
-    @Override
-    protected boolean checkLayoutParams(ViewGroup.LayoutParams p) {
-        return p instanceof LayoutParams;
-    }
 
     public FieldPlayerCollection getFieldPlayers() {
         return fieldPlayers;
@@ -170,12 +164,14 @@ public class FootballFieldLayout extends ViewGroup implements FieldPlayerCollect
         fpc.addListener(this);
         fieldPlayers = fpc;
         collectionsChanges();
+
     }
 
     public void collectionsChanges() {
         removeAllViews();
         for(FieldPlayer fieldPlayer : getFieldPlayers().list)
         {
+            Log.i("collctionChanges", fieldPlayer.getShortName());
             addView(new FieldPlayerView(getContext(), fieldPlayer));
         }
     }
