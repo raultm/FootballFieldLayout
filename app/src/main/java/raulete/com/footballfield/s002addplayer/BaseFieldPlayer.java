@@ -1,4 +1,4 @@
-package raulete.com.footballfield.s001emptyfield;
+package raulete.com.footballfield.s002addplayer;
 
 import raulete.com.footballfield.custom.FieldPlayer;
 

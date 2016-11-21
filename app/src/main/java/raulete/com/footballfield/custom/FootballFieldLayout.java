@@ -5,12 +5,9 @@ import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.RemoteViews;
-
-import java.util.BitSet;
 
 import raulete.com.footballfield.R;
 
@@ -58,9 +55,9 @@ import raulete.com.footballfield.R;
  * |___________|
  */
 @RemoteViews.RemoteView
-public class FootballFieldLayout extends RelativeLayout implements FieldPlayerCollection.OnChangesListener{
+public class FootballFieldLayout extends RelativeLayout {
 
-    private FieldPlayerCollection fieldPlayers = new FieldPlayerCollection();
+    private FieldPlayerCollection fpc = new FieldPlayerCollection();
 
     public FootballFieldLayout(Context context) {
         super(context);
@@ -73,6 +70,10 @@ public class FootballFieldLayout extends RelativeLayout implements FieldPlayerCo
     public FootballFieldLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         setBackgroundResource(R.mipmap.football_field);
+    }
+
+    public void addPlayer(FieldPlayer player) {
+        fpc.add(player);
     }
 
     /**
@@ -156,64 +157,7 @@ public class FootballFieldLayout extends RelativeLayout implements FieldPlayerCo
 */
 
 
-    public FieldPlayerCollection getFieldPlayers() {
-        return fieldPlayers;
-    }
 
-    public void linkFieldPlayerCollection(FieldPlayerCollection fpc) {
-        fpc.addListener(this);
-        fieldPlayers = fpc;
-        collectionsChanges();
 
-    }
 
-    public void collectionsChanges() {
-        removeAllViews();
-        for(FieldPlayer fieldPlayer : getFieldPlayers().list)
-        {
-            Log.i("collctionChanges", fieldPlayer.getShortName());
-            addView(new FieldPlayerView(getContext(), fieldPlayer));
-        }
-    }
-
-    @Override
-    public void change(FieldPlayerCollection fpc) {
-        collectionsChanges();
-    }
-
-    /**
-     * Custom per-child layout information.
-     */
-    public static class LayoutParams extends MarginLayoutParams {
-        /**
-         * The gravity to apply with the View to which these layout parameters
-         * are associated.
-         */
-        public int gravity = Gravity.TOP | Gravity.START;
-
-        public static int POSITION_LEFT = 1;
-        public static int POSITION_RIGHT = 2;
-
-        public int position = POSITION_LEFT;
-
-        public LayoutParams(Context c, AttributeSet attrs) {
-            super(c, attrs);
-
-            // Pull the layout param values from the layout XML during
-            // inflation.  This is not needed if you don't care about
-            // changing the layout behavior in XML.
-            //TypedArray a = c.obtainStyledAttributes(attrs, R.styleable.CustomLayoutLP);
-            //gravity = a.getInt(R.styleable.CustomLayoutLP_android_layout_gravity, gravity);
-            //position = a.getInt(R.styleable.CustomLayoutLP_layout_position, position);
-            //a.recycle();
-        }
-
-        public LayoutParams(int width, int height) {
-            super(width, height);
-        }
-
-        public LayoutParams(ViewGroup.LayoutParams source) {
-            super(source);
-        }
-    }
 }

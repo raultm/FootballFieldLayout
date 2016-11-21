@@ -29,7 +29,7 @@ public class BasicFieldActivityTest {
     public ActivityTestRule<BasicFieldActivity> mActivityRule = new ActivityTestRule(BasicFieldActivity.class);
 
     @Test
-    public void listGoesOverTheFold() {
+    public void layoutIsDisplayed() {
         onView(withId(R.id.activity_basic)).check(matches(isDisplayed()));
     }
 

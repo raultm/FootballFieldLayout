@@ -15,4 +15,10 @@
         android:layout_height="wrap_content"
         android:text="Basic Field"
         android:onClick="openBasicField"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Player"
+        android:onClick="openAddPlayer"/>
 </RelativeLayout>
