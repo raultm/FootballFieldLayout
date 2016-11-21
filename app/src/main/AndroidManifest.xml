@@ -16,6 +16,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".s001emptyfield.BasicFieldActivity"></activity>
+        <activity android:name=".s002addplayer.AddPlayerActivity"></activity>
     </application>
 
 </manifest>
