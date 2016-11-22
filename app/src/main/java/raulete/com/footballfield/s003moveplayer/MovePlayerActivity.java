@@ -4,9 +4,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import raulete.com.footballfield.BaseFieldPlayer;
 import raulete.com.footballfield.R;
 import raulete.com.footballfield.custom.FootballFieldLayout;
-import raulete.com.footballfield.s002addplayer.BaseFieldPlayer;
 
 public class MovePlayerActivity extends AppCompatActivity {
 

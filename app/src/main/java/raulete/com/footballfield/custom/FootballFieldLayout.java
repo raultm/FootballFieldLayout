@@ -5,6 +5,8 @@ import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.RemoteViews;
@@ -55,7 +57,7 @@ import raulete.com.footballfield.R;
  * |___________|
  */
 @RemoteViews.RemoteView
-public class FootballFieldLayout extends RelativeLayout {
+public class FootballFieldLayout extends RelativeLayout implements View.OnTouchListener {
 
     private FieldPlayerCollection fpc = new FieldPlayerCollection();
 
@@ -74,7 +76,9 @@ public class FootballFieldLayout extends RelativeLayout {
 
     public void addPlayer(FieldPlayer player) {
         fpc.add(player);
-        addView(new FieldPlayerView(getContext(), player));
+        FieldPlayerView fpv = new FieldPlayerView(getContext(), player);
+        addView(fpv);
+        fpv.setOnTouchListener(this);
     }
 
     /**
@@ -104,7 +108,6 @@ public class FootballFieldLayout extends RelativeLayout {
     */
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        Log.i("FFL", "Child Count: " + getChildCount());
         super.onLayout(changed, left, top, right, bottom);
     }
 
@@ -122,6 +125,37 @@ public class FootballFieldLayout extends RelativeLayout {
 */
 
 
+    // http://stackoverflow.com/questions/9398057/android-move-a-view-on-touch-move-action-move
+
+    public float dX, dY;
+
+    @Override
+    public boolean onTouch(View view, MotionEvent event) {
+
+        switch (event.getAction()) {
+
+            case MotionEvent.ACTION_DOWN:
+
+                dX = view.getX() - event.getRawX();
+                dY = view.getY() - event.getRawY();
+                break;
+
+            case MotionEvent.ACTION_MOVE:
+
+                view.animate()
+                        .x(event.getRawX() + dX)
+                        .y(event.getRawY() + dY)
+                        .setDuration(0)
+                        .start();
+                break;
+            case MotionEvent.ACTION_UP:
+                //view.setOnTouchListener(null);
+                break;
+            default:
+                return false;
+        }
+        return true;
+    }
 
 
 
