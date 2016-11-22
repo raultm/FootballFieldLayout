@@ -9,28 +9,16 @@ public class FieldPlayerCollection {
 
     ArrayList<FieldPlayer> list = new ArrayList<>();
 
-    ArrayList<FieldPlayerCollection.OnChangesListener> listeners = new ArrayList<>();
-
-    public int size()
-    {
-        return list.size();
-    }
-
-    public boolean add(FieldPlayer player)
-    {
-        for (FieldPlayerCollection.OnChangesListener listener : listeners)
-        {
-            listener.change(this);
-        }
+    public boolean add(FieldPlayer player) {
         return list.add(player);
     }
 
-    public void addListener(FootballFieldLayout footballFieldLayout) {
-        listeners.add(footballFieldLayout);
+    public FieldPlayer first() {
+        if(list.size() > 0)
+        {
+            return list.get(0);
+        }
+        return null;
     }
 
-
-    public interface OnChangesListener {
-        void change(FieldPlayerCollection fpc);
-    }
 }

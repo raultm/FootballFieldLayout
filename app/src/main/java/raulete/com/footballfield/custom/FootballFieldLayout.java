@@ -74,6 +74,7 @@ public class FootballFieldLayout extends RelativeLayout {
 
     public void addPlayer(FieldPlayer player) {
         fpc.add(player);
+        addView(new FieldPlayerView(getContext(), player));
     }
 
     /**
@@ -98,51 +99,15 @@ public class FootballFieldLayout extends RelativeLayout {
     }
     */
 
-    /** These are used for computing child frames based on their gravity. */
-    private final Rect mTmpContainerRect = new Rect();
-    private final Rect mTmpChildRect = new Rect();
-
     /**
      * Position all children within this layout.
-
+    */
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        final int count = getChildCount();
-
-        // These are the far left and right edges in which we are performing layout.
-        int leftPos = getPaddingLeft();
-        int rightPos = right - left - getPaddingRight();
-
-        // These are the top and bottom edges in which we are performing layout.
-        final int parentTop = getPaddingTop();
-        final int parentBottom = bottom - top - getPaddingBottom();
-
-        for (int i = 0; i < count; i++) {
-            final View child = getChildAt(i);
-            if (child.getVisibility() != GONE) {
-                final LayoutParams lp = (LayoutParams) child.getLayoutParams();
-
-                final int width = child.getMeasuredWidth();
-                final int height = child.getMeasuredHeight();
-
-                mTmpContainerRect.left = leftPos + lp.leftMargin;
-                mTmpContainerRect.right = leftPos + width + lp.rightMargin;
-                leftPos = mTmpContainerRect.right;
-                mTmpContainerRect.top = parentTop + lp.topMargin;
-                mTmpContainerRect.bottom = parentBottom - lp.bottomMargin;
-
-                // Use the child's gravity and size to determine its final
-                // frame within its container.
-                Gravity.apply(Gravity.TOP | Gravity.START, width, height, mTmpContainerRect, mTmpChildRect);
-
-                // Place the child.
-                child.layout(mTmpChildRect.left, mTmpChildRect.top,
-                        mTmpChildRect.right, mTmpChildRect.bottom);
-            }
-        }
-
+        Log.i("FFL", "Child Count: " + getChildCount());
+        super.onLayout(changed, left, top, right, bottom);
     }
-*/
+
 
     // ----------------------------------------------------------------------
     // The rest of the implementation is for custom per-child layout parameters.

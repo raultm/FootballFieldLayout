@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -13,46 +14,48 @@ import raulete.com.footballfield.R;
  * Created by raulete on 16/11/16.
  */
 
-public class FieldPlayerView extends RelativeLayout {
+public class FieldPlayerView extends LinearLayout {
 
     public FieldPlayerView(Context context, FieldPlayer fieldPlayer) {
         super(context);
+        setOrientation(LinearLayout.VERTICAL);
+        setId(R.id.test_messi);
         addNumber(fieldPlayer.getNumber());
         addName(fieldPlayer.getShortName());
     }
 
     private void addName(String shortName) {
         TextView tv = new TextView(getContext());
-        addView(tv);
-        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) tv.getLayoutParams();
-
-        layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
-
-        layoutParams.width = dip2px(40);
-        layoutParams.height = dip2px(10);
-
-
-        tv.setText(shortName);
-        tv.setLayoutParams(layoutParams);
+        tv.setTextColor(Color.parseColor("#FFFFFF"));
         tv.setGravity(Gravity.CENTER);
         tv.setBackgroundColor(Color.parseColor("#000000"));
         tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 8);
+        tv.setText(shortName);
 
+        addView(tv);
 
+        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) tv.getLayoutParams();
+        //layoutParams.addRule(RelativeLayout.ALIGN_TOP, RelativeLayout.TRUE);
+        //layoutParams.addRule(RelativeLayout.ALIGN_BOTTOM, RelativeLayout.TRUE);
+        layoutParams.width = dip2px(40);
+        layoutParams.height = dip2px(10);
+
+        tv.setLayoutParams(layoutParams);
     }
 
     private void addNumber(String number) {
         TextView tv = new TextView(getContext());
         addView(tv);
 
-        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) tv.getLayoutParams();
+        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) tv.getLayoutParams();
 
-        layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
+        //layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
         final float scale = getContext().getResources().getDisplayMetrics().density;
         layoutParams.width = dip2px(40);
         layoutParams.height = dip2px(30);
 
         tv.setText(number);
+        tv.setTextColor(Color.parseColor("#FFFFFF"));
         tv.setLayoutParams(layoutParams);
         tv.setGravity(Gravity.CENTER);
         tv.setBackgroundColor(Color.parseColor("#66000000"));

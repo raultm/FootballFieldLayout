@@ -7,6 +7,7 @@ import android.view.View;
 
 import raulete.com.footballfield.s001emptyfield.BasicFieldActivity;
 import raulete.com.footballfield.s002addplayer.AddPlayerActivity;
+import raulete.com.footballfield.s003moveplayer.MovePlayerActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,6 +24,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void openAddPlayer(View view) {
         Intent openIntent = new Intent(this, AddPlayerActivity.class);
+        startActivity(openIntent);
+    }
+
+    public void openMovePlayer(View view) {
+        Intent openIntent = new Intent(this, MovePlayerActivity.class);
         startActivity(openIntent);
     }
 }

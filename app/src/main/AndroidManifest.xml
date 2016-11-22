@@ -17,6 +17,7 @@
         </activity>
         <activity android:name=".s001emptyfield.BasicFieldActivity"></activity>
         <activity android:name=".s002addplayer.AddPlayerActivity"></activity>
+        <activity android:name=".s003moveplayer.MovePlayerActivity"></activity>
     </application>
 
 </manifest>
