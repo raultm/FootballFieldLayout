@@ -1,15 +1,13 @@
 package raulete.com.footballfield.custom;
 
 import android.content.Context;
-import android.graphics.Rect;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.RemoteViews;
+
+import java.lang.reflect.Field;
 
 import raulete.com.footballfield.R;
 
@@ -59,6 +57,16 @@ import raulete.com.footballfield.R;
 @RemoteViews.RemoteView
 public class FootballFieldLayout extends RelativeLayout implements View.OnTouchListener {
 
+
+    public final static int PLAYER_MOVE_ON_LONG_CLICK = 100;
+    public final static int PLAYER_MOVE_ON_ADDED = 200;
+
+    public final static int NO_DELTA = -10000;
+
+    private int MOVE_ON_ACTION = PLAYER_MOVE_ON_LONG_CLICK;
+    private OnPlayerActionsCallback onPlayerActionsCallback = uselessOnPlayerCallback;
+
+
     private FieldPlayerCollection fpc = new FieldPlayerCollection();
 
     public FootballFieldLayout(Context context) {
@@ -76,9 +84,32 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
 
     public void addPlayer(FieldPlayer player) {
         fpc.add(player);
-        FieldPlayerView fpv = new FieldPlayerView(getContext(), player);
+        final FieldPlayerView fpv = new FieldPlayerView(getContext(), player);
         addView(fpv);
-        fpv.setOnTouchListener(this);
+        activateOnTouchListener(fpv);
+    }
+
+    public void setActionToActivateOnTouchListener(int action)
+    {
+        MOVE_ON_ACTION = action;
+    }
+
+    public void activateOnTouchListener(final View view)
+    {
+        switch (MOVE_ON_ACTION){
+            case PLAYER_MOVE_ON_ADDED:
+                view.setOnTouchListener(this);
+                break;
+            case PLAYER_MOVE_ON_LONG_CLICK:default:
+                view.setOnLongClickListener(new OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        v.setOnTouchListener(FootballFieldLayout.this);
+                        return true;
+                    }
+                });
+                break;
+        }
     }
 
     /**
@@ -127,29 +158,25 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
 
     // http://stackoverflow.com/questions/9398057/android-move-a-view-on-touch-move-action-move
 
-    public float dX, dY;
+    public float dX=NO_DELTA, dY=NO_DELTA;
 
     @Override
     public boolean onTouch(View view, MotionEvent event) {
-
         switch (event.getAction()) {
 
             case MotionEvent.ACTION_DOWN:
-
-                dX = view.getX() - event.getRawX();
-                dY = view.getY() - event.getRawY();
+                setDelta(view, event);
                 break;
-
             case MotionEvent.ACTION_MOVE:
-
-                view.animate()
-                        .x(event.getRawX() + dX)
-                        .y(event.getRawY() + dY)
-                        .setDuration(0)
-                        .start();
+                move(view, event);
                 break;
             case MotionEvent.ACTION_UP:
-                //view.setOnTouchListener(null);
+                FieldPlayerView fpv = (FieldPlayerView)view;
+                FieldPosition fposition = FieldPosition.createFromEvent(this, event);
+                onPlayerActionsCallback.moved(fpv.getFieldPlayer(), fposition);
+                view.setOnTouchListener(null);
+                activateOnTouchListener(view);
+                resetDelta();
                 break;
             default:
                 return false;
@@ -157,6 +184,41 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
         return true;
     }
 
+    public void setDelta(View view, MotionEvent event)
+    {
+        dX = view.getX() - event.getRawX();
+        dY = view.getY() - event.getRawY();
+    }
+
+    public void resetDelta()
+    {
+        dX = NO_DELTA;
+        dY = NO_DELTA;
+    }
+
+    public void move(View view, MotionEvent event)
+    {
+        if(dX == NO_DELTA || dY == NO_DELTA){ setDelta(view, event); }
+        view.animate()
+                .x(event.getRawX() + dX)
+                .y(event.getRawY() + dY)
+                .setDuration(0)
+                .start();
+    }
 
 
+    public void setOnPlayerActionsCallback(OnPlayerActionsCallback cb) {
+        onPlayerActionsCallback = cb;
+    }
+
+    public interface OnPlayerActionsCallback{
+        void moved(FieldPlayer fp, FieldPosition fieldPosition);
+    }
+
+    private final static OnPlayerActionsCallback uselessOnPlayerCallback = new OnPlayerActionsCallback() {
+        @Override
+        public void moved(FieldPlayer fp, FieldPosition fieldPosition) {
+
+        }
+    };
 }

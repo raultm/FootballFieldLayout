@@ -16,12 +16,20 @@ import raulete.com.footballfield.R;
 
 public class FieldPlayerView extends LinearLayout {
 
+    private FieldPlayer fp;
+
     public FieldPlayerView(Context context, FieldPlayer fieldPlayer) {
         super(context);
+        this.fp = fieldPlayer;
         setOrientation(LinearLayout.VERTICAL);
-        setId(R.id.test_messi);
+        setId(R.id.player_undefined);
         addNumber(fieldPlayer.getNumber());
         addName(fieldPlayer.getShortName());
+    }
+
+    public FieldPlayer getFieldPlayer()
+    {
+        return fp;
     }
 
     private void addName(String shortName) {

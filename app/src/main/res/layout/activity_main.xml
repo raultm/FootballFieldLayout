@@ -11,6 +11,19 @@
     android:orientation="vertical"
     tools:context="raulete.com.footballfield.MainActivity">
 
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Moved Callback"
+        android:onClick="openAfterMovedCallback"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Move On Long Click"
+        android:onClick="openMovePlayerOnLongClick"/>
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -39,7 +39,7 @@ public class AddPlayerActivityTest {
         onView(withId(R.id.activity_field)).check(matches(isDisplayed()));
         onView(withId(R.id.activity_add_button)).check(matches(isDisplayed()));
 
-        onView(withId(R.id.test_messi)).check(doesNotExist());
+        onView(withId(R.id.player_undefined)).check(doesNotExist());
     }
 
     @Test
@@ -48,7 +48,7 @@ public class AddPlayerActivityTest {
 
         onView(withId(R.id.activity_field)).check(exists());
 
-        onView(withId(R.id.test_messi)).check(matches(isDisplayed()));
+        onView(withId(R.id.player_undefined)).check(matches(isDisplayed()));
         onView(withText("Messi")).check(matches(isDisplayed()));
         onView(withText("10")).check(matches(isDisplayed()));
     }
