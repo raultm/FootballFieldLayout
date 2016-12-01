@@ -10,6 +10,7 @@ import raulete.com.footballfield.s002addplayer.AddPlayerActivity;
 import raulete.com.footballfield.s003moveplayer.MovePlayerActivity;
 import raulete.com.footballfield.s004moveonlongclick.MoveOnLongClickActivity;
 import raulete.com.footballfield.s005aftermovedcallback.AfterMovedPlayerCallbackActivity;
+import raulete.com.footballfield.s006exchangeplayer.ExchangePlayerActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,6 +42,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void openAfterMovedCallback(View view) {
         Intent openIntent = new Intent(this, AfterMovedPlayerCallbackActivity.class);
+        startActivity(openIntent);
+    }
+
+    public void openExchangePlayer(View view) {
+        Intent openIntent = new Intent(this, ExchangePlayerActivity.class);
         startActivity(openIntent);
     }
 }

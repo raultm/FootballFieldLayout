@@ -15,39 +15,39 @@ import raulete.com.footballfield.R;
  * Example of writing a custom layout manager.  This is a fairly full-featured
  * layout manager that is relatively general, handling all layout cases.  You
  * can simplify it for more specific cases.
- *
+ * <p>
  * https://developer.android.com/reference/android/view/ViewGroup.html
- *
+ * <p>
  * onMeasure
  * All the players are going to have the same dimensions.
- *
- *  ______________________
+ * <p>
+ * ______________________
  * |   D  M    |   M  D   |
  * |   D  M  F | F M  D   |
  * |G          |         G|
  * |   D  M  F | F M  D   |
  * |___D__M____|___M__D___|
- *
- *
+ * <p>
+ * <p>
  * onLayout
- *
+ * <p>
  * The position of a player always will be relative 0-100 from the field point of view to avoid
  * problems when drawing th field in different resolutions
- *
+ * <p>
  * 0           50        100
- *  ______________________    0
+ * ______________________    0
  * |           |          |
  * |           |          |
  * |           |          |
  * |           |          |
  * |___________|__________|  100
- *
- *
+ * <p>
+ * <p>
  * The position of the player will be referenced to the middle of the PlayerViewItself. I don't know
  * of it's gonna give problems this decision, but I need to define this now before use different
  * approaches
- *
- *  ___________
+ * <p>
+ * ___________
  * |           |
  * |           |
  * |     X     |
@@ -82,25 +82,32 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
         setBackgroundResource(R.mipmap.football_field);
     }
 
-    public void addPlayer(FieldPlayer player) {
-        fpc.add(player);
-        final FieldPlayerView fpv = new FieldPlayerView(getContext(), player);
+    public void addPlayer(FieldPlayer player)
+    {
+        addPlayerView(new FieldPlayerView(getContext(), player));
+    }
+
+    public void addPlayerView(FieldPlayerView fpv) {
+        fpc.add(fpv);
         addView(fpv);
         activateOnTouchListener(fpv);
     }
 
-    public void setActionToActivateOnTouchListener(int action)
-    {
+    private void removePlayer(FieldPlayer player){
+        removeView(fpc.getView(player));
+    }
+
+    public void setActionToActivateOnTouchListener(int action) {
         MOVE_ON_ACTION = action;
     }
 
-    public void activateOnTouchListener(final View view)
-    {
-        switch (MOVE_ON_ACTION){
+    public void activateOnTouchListener(final View view) {
+        switch (MOVE_ON_ACTION) {
             case PLAYER_MOVE_ON_ADDED:
                 view.setOnTouchListener(this);
                 break;
-            case PLAYER_MOVE_ON_LONG_CLICK:default:
+            case PLAYER_MOVE_ON_LONG_CLICK:
+            default:
                 view.setOnLongClickListener(new OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
@@ -136,7 +143,7 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
 
     /**
      * Position all children within this layout.
-    */
+     */
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
@@ -158,7 +165,7 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
 
     // http://stackoverflow.com/questions/9398057/android-move-a-view-on-touch-move-action-move
 
-    public float dX=NO_DELTA, dY=NO_DELTA;
+    public float dX = NO_DELTA, dY = NO_DELTA;
 
     @Override
     public boolean onTouch(View view, MotionEvent event) {
@@ -171,7 +178,7 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
                 move(view, event);
                 break;
             case MotionEvent.ACTION_UP:
-                FieldPlayerView fpv = (FieldPlayerView)view;
+                FieldPlayerView fpv = (FieldPlayerView) view;
                 FieldPosition fposition = FieldPosition.createFromEvent(this, event);
                 onPlayerActionsCallback.moved(fpv.getFieldPlayer(), fposition);
                 view.setOnTouchListener(null);
@@ -184,21 +191,20 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
         return true;
     }
 
-    public void setDelta(View view, MotionEvent event)
-    {
+    public void setDelta(View view, MotionEvent event) {
         dX = view.getX() - event.getRawX();
         dY = view.getY() - event.getRawY();
     }
 
-    public void resetDelta()
-    {
+    public void resetDelta() {
         dX = NO_DELTA;
         dY = NO_DELTA;
     }
 
-    public void move(View view, MotionEvent event)
-    {
-        if(dX == NO_DELTA || dY == NO_DELTA){ setDelta(view, event); }
+    public void move(View view, MotionEvent event) {
+        if (dX == NO_DELTA || dY == NO_DELTA) {
+            setDelta(view, event);
+        }
         view.animate()
                 .x(event.getRawX() + dX)
                 .y(event.getRawY() + dY)
@@ -211,7 +217,11 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
         onPlayerActionsCallback = cb;
     }
 
-    public interface OnPlayerActionsCallback{
+    public void exchange(FieldPlayer playerFromFieldToBench, FieldPlayer playerFromBenchToField) {
+        fpc.exchange(playerFromFieldToBench, playerFromBenchToField);
+    }
+
+    public interface OnPlayerActionsCallback {
         void moved(FieldPlayer fp, FieldPosition fieldPosition);
     }
 

@@ -21,14 +21,18 @@ public class FieldPlayerView extends LinearLayout {
     public FieldPlayerView(Context context, FieldPlayer fieldPlayer) {
         super(context);
         this.fp = fieldPlayer;
-        setOrientation(LinearLayout.VERTICAL);
-        setId(R.id.player_undefined);
-        addNumber(fieldPlayer.getNumber());
-        addName(fieldPlayer.getShortName());
+        draw();
     }
 
-    public FieldPlayer getFieldPlayer()
-    {
+    private void draw() {
+        removeAllViews();
+        setOrientation(LinearLayout.VERTICAL);
+        setId(R.id.player_undefined);
+        addNumber(fp.getNumber());
+        addName(fp.getShortName());
+    }
+
+    public FieldPlayer getFieldPlayer() {
         return fp;
     }
 
@@ -96,6 +100,10 @@ public class FieldPlayerView extends LinearLayout {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
+    public void setPlayer(FieldPlayer fieldPlayer) {
+        this.fp = fieldPlayer;
+        draw();
+    }
 }
 
 

@@ -20,6 +20,7 @@
         <activity android:name=".s003moveplayer.MovePlayerActivity"></activity>
         <activity android:name=".s004moveonlongclick.MoveOnLongClickActivity"></activity>
         <activity android:name=".s005aftermovedcallback.AfterMovedPlayerCallbackActivity"></activity>
+        <activity android:name=".s006exchangeplayer.ExchangePlayerActivity"></activity>
     </application>
 
 </manifest>
