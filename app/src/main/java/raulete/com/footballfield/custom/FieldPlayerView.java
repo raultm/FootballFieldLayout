@@ -2,10 +2,10 @@ package raulete.com.footballfield.custom;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import raulete.com.footballfield.R;
@@ -17,10 +17,25 @@ import raulete.com.footballfield.R;
 public class FieldPlayerView extends LinearLayout {
 
     private FieldPlayer fp;
+    private FieldCoordinates fc;
 
     public FieldPlayerView(Context context, FieldPlayer fieldPlayer) {
+        this(context, fieldPlayer, FieldCoordinates.create(0,0));
+
+    }
+
+    public FieldPlayerView(Context context, FieldPlayer fieldPlayer, FieldCoordinates fieldCoordinates) {
         super(context);
         this.fp = fieldPlayer;
+        this.fc = fieldCoordinates;
+        /*
+        LayoutParams params = new LayoutParams(
+                LayoutParams.WRAP_CONTENT,
+                LayoutParams.WRAP_CONTENT
+        );
+        params.setMargins(fieldCoordinates.x(), fieldCoordinates.y(), 0, 0);
+        setLayoutParams(params);
+                */
         draw();
     }
 
@@ -103,6 +118,10 @@ public class FieldPlayerView extends LinearLayout {
     public void setPlayer(FieldPlayer fieldPlayer) {
         this.fp = fieldPlayer;
         draw();
+    }
+
+    public FieldCoordinates getFieldCoordinates(){
+        return fc;
     }
 }
 

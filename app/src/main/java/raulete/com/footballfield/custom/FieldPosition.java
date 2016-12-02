@@ -27,7 +27,6 @@ public class FieldPosition {
     private final float positionY;
 
 
-
     public static FieldPosition createFromEvent(FootballFieldLayout footballFieldLayout, MotionEvent event) {
 
         Rect rectf = new Rect();
@@ -45,11 +44,11 @@ public class FieldPosition {
         Log.d("x          :", String.valueOf(coordinates[X]));
         Log.d("y          :", String.valueOf(coordinates[Y]));
 
-        Log.i("s005", "event (" + event.getRawX() + ", " + event.getRawY() +")");
-        Log.i("s005", "event (" + event.getX() + ", " + event.getY() +")");
-        Log.i("s005", "field (" + footballFieldLayout.getX() + ", " + footballFieldLayout.getY() +")");
-        Log.i("s005", "field (" + footballFieldLayout.getWidth() + ", " + footballFieldLayout.getHeight() +")");
-       // float positionX = (event.getRawX() - footballFieldLayout.getX()) * 100 / footballFieldLayout.getWidth();
+        Log.i("s005", "event (" + event.getRawX() + ", " + event.getRawY() + ")");
+        Log.i("s005", "event (" + event.getX() + ", " + event.getY() + ")");
+        Log.i("s005", "field (" + footballFieldLayout.getX() + ", " + footballFieldLayout.getY() + ")");
+        Log.i("s005", "field (" + footballFieldLayout.getWidth() + ", " + footballFieldLayout.getHeight() + ")");
+        // float positionX = (event.getRawX() - footballFieldLayout.getX()) * 100 / footballFieldLayout.getWidth();
         float positionX = (event.getRawX() - coordinates[X]) * 100 / footballFieldLayout.getWidth();
         //float positionY = (event.getRawY() - footballFieldLayout.getY()) * 100 / footballFieldLayout.getHeight();
         float positionY = (event.getRawY() - coordinates[Y]) * 100 / footballFieldLayout.getHeight();
@@ -67,14 +66,21 @@ public class FieldPosition {
 //        return new FieldPosition(footballFieldLayout, positionX, positionY);
 //    }
 
-    private static int[] getCoordinates(View view){
+    public static final FieldPosition createFromXY(FootballFieldLayout ffl, float x, float y) {
+        return new FieldPosition(ffl, x, y);
+    }
+
+    public static final FieldPosition createDefault(FootballFieldLayout ffl) {
+        return createFromXY(ffl, 0, 0);
+    }
+
+    private static int[] getCoordinates(View view) {
         int[] coordinates = new int[2];
         view.getLocationOnScreen(coordinates);
         return coordinates;
     }
 
-    private FieldPosition(FootballFieldLayout footballFieldLayout, float x, float y)
-    {
+    private FieldPosition(FootballFieldLayout footballFieldLayout, float x, float y) {
         int[] coordinates = new int[2];
         footballFieldLayout.getLocationOnScreen(coordinates);
 
@@ -96,15 +102,15 @@ public class FieldPosition {
                 + "- %position: (" + positionX + "," + positionY + ")";
     }
 
-    public String getCoords(){
+    public String getCoords() {
         return "Relative Coords: (" + positionX + "," + positionY + ")";
     }
 
-    public String getFieldDimen(){
+    public String getFieldDimen() {
         return "Field Dimen: (" + fieldWidth + "," + fieldHeight + ")";
     }
 
-    public String getFieldCoords(){
+    public String getFieldCoords() {
         return "Field Coords: (" + fieldRawX + "," + fieldRawY + ")(" + fieldX + "," + fieldY + ")";
     }
 
@@ -114,6 +120,14 @@ public class FieldPosition {
 
     public int getY() {
         return (int) positionY;
+    }
+
+    public int getXinPx(){
+        return (int)(getX() * fieldWidth / 100);
+    }
+
+    public int getYinPx(){
+        return (int)(getY() * fieldHeight / 100);
     }
 
 

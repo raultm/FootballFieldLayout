@@ -11,6 +11,7 @@ import raulete.com.footballfield.s003moveplayer.MovePlayerActivity;
 import raulete.com.footballfield.s004moveonlongclick.MoveOnLongClickActivity;
 import raulete.com.footballfield.s005aftermovedcallback.AfterMovedPlayerCallbackActivity;
 import raulete.com.footballfield.s006exchangeplayer.ExchangePlayerActivity;
+import raulete.com.footballfield.s012adplayercustomposition.CustomPositionActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,32 +22,34 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openBasicField(View view) {
-        Intent openBasicFieldIntent = new Intent(this, BasicFieldActivity.class);
-        startActivity(openBasicFieldIntent);
+        openActivity(BasicFieldActivity.class);
     }
 
     public void openAddPlayer(View view) {
-        Intent openIntent = new Intent(this, AddPlayerActivity.class);
-        startActivity(openIntent);
+        openActivity(AddPlayerActivity.class);
     }
 
     public void openMovePlayer(View view) {
-        Intent openIntent = new Intent(this, MovePlayerActivity.class);
-        startActivity(openIntent);
+        openActivity(MovePlayerActivity.class);
     }
 
     public void openMovePlayerOnLongClick(View view) {
-        Intent openIntent = new Intent(this, MoveOnLongClickActivity.class);
-        startActivity(openIntent);
+        openActivity(MoveOnLongClickActivity.class);
     }
 
     public void openAfterMovedCallback(View view) {
-        Intent openIntent = new Intent(this, AfterMovedPlayerCallbackActivity.class);
-        startActivity(openIntent);
+        openActivity(AfterMovedPlayerCallbackActivity.class);
     }
 
     public void openExchangePlayer(View view) {
-        Intent openIntent = new Intent(this, ExchangePlayerActivity.class);
-        startActivity(openIntent);
+        openActivity(ExchangePlayerActivity.class);
+    }
+
+    public void openCustomPosition(View view) {
+        openActivity(CustomPositionActivity.class);
+    }
+
+    private void openActivity(Class<?> cls){
+        startActivity(new Intent(this, cls));
     }
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.RemoteViews;
 
@@ -82,9 +83,18 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
         setBackgroundResource(R.mipmap.football_field);
     }
 
-    public void addPlayer(FieldPlayer player)
-    {
-        addPlayerView(new FieldPlayerView(getContext(), player));
+    public void addPlayer(FieldPlayer player, FieldPosition fieldPosition) {
+        // TODO add position this nw view
+        FieldPlayerView fpv = new FieldPlayerView(getContext(), player);
+        addPlayerView(fpv);
+        RelativeLayout.LayoutParams params = (LayoutParams) fpv.getLayoutParams();
+        params.leftMargin = fieldPosition.getXinPx();
+        params.topMargin = fieldPosition.getYinPx();
+
+    }
+
+    public void addPlayer(FieldPlayer player) {
+        addPlayer(player, FieldPosition.createDefault(this));
     }
 
     public void addPlayerView(FieldPlayerView fpv) {
@@ -93,7 +103,7 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
         activateOnTouchListener(fpv);
     }
 
-    private void removePlayer(FieldPlayer player){
+    private void removePlayer(FieldPlayer player) {
         removeView(fpc.getView(player));
     }
 
