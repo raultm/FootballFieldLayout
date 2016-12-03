@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import raulete.com.footballfield.R;
+import raulete.com.footballfield.custom.FieldPlayerView;
 import raulete.com.footballfield.s002addplayer.AddPlayerActivity;
 import raulete.com.footballfield.s012adplayercustomposition.CustomPositionActivity;
 
@@ -43,9 +44,10 @@ public class CustomPositionActivityTest {
 
         onView(withId(R.id.player_undefined)).check(matches(isDisplayed()));
         View field = mActivityRule.getActivity().findViewById(R.id.activity_field);
-        View view = mActivityRule.getActivity().findViewById(R.id.player_undefined);
+        FieldPlayerView playerView = (FieldPlayerView) mActivityRule.getActivity().findViewById(R.id.player_undefined);
 
-        float[] coord = {view.getX(), view.getY()};
+
+        float[] coord = playerView.getCoords();
 
         assertThat(coord[0] / field.getWidth() * 100, equalTo(50f));
         assertThat(coord[1] / field.getHeight() * 100, equalTo(50f));

@@ -2,6 +2,7 @@ package raulete.com.footballfield.custom;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,13 +85,10 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
     }
 
     public void addPlayer(FieldPlayer player, FieldPosition fieldPosition) {
-        // TODO add position this nw view
+        // TODO add position this new view
         FieldPlayerView fpv = new FieldPlayerView(getContext(), player);
         addPlayerView(fpv);
-        RelativeLayout.LayoutParams params = (LayoutParams) fpv.getLayoutParams();
-        params.leftMargin = fieldPosition.getXinPx();
-        params.topMargin = fieldPosition.getYinPx();
-
+        fpv.setPosition(fieldPosition);
     }
 
     public void addPlayer(FieldPlayer player) {
