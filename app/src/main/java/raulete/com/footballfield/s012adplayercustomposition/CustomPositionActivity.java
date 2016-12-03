@@ -6,6 +6,7 @@ import android.view.View;
 
 import raulete.com.footballfield.BaseFieldPlayer;
 import raulete.com.footballfield.R;
+import raulete.com.footballfield.custom.FieldCoordinates;
 import raulete.com.footballfield.custom.FieldPlayer;
 import raulete.com.footballfield.custom.FieldPosition;
 import raulete.com.footballfield.custom.FootballFieldLayout;
@@ -26,7 +27,7 @@ public class CustomPositionActivity extends AppCompatActivity {
     }
 
     public void addPlayer(View view) {
-        footballFieldLayout.addPlayer(messi, FieldPosition.createFromXY(footballFieldLayout, 50f, 50f));
+        footballFieldLayout.addPlayer(messi, FieldCoordinates.create(50f, 50f));
     }
 
 

@@ -84,25 +84,19 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
         setBackgroundResource(R.mipmap.football_field);
     }
 
-    public void addPlayer(FieldPlayer player, FieldPosition fieldPosition) {
-        // TODO add position this new view
-        FieldPlayerView fpv = new FieldPlayerView(getContext(), player);
-        addPlayerView(fpv);
-        fpv.setPosition(fieldPosition);
+    public void addPlayer(FieldPlayer player) {
+        addPlayer(player, FieldCoordinates.create());
     }
 
-    public void addPlayer(FieldPlayer player) {
-        addPlayer(player, FieldPosition.createDefault(this));
+    public void addPlayer(FieldPlayer player, FieldCoordinates fieldCoordinates) {
+        FieldPlayerView fpv = new FieldPlayerView(getContext(), player, fieldCoordinates);
+        addPlayerView(fpv);
     }
 
     public void addPlayerView(FieldPlayerView fpv) {
         fpc.add(fpv);
         addView(fpv);
         activateOnTouchListener(fpv);
-    }
-
-    private void removePlayer(FieldPlayer player) {
-        removeView(fpc.getView(player));
     }
 
     public void setActionToActivateOnTouchListener(int action) {
@@ -137,19 +131,6 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
 
 
     /**
-     * Ask all children to measure themselves and compute the measurement of this
-     * layout based on the children.
-     *
-
-     */
-    /*
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-    }
-    */
-
-    /**
      * Position all children within this layout.
      */
     @Override
@@ -157,22 +138,7 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
         super.onLayout(changed, left, top, right, bottom);
     }
 
-
-    // ----------------------------------------------------------------------
-    // The rest of the implementation is for custom per-child layout parameters.
-    // If you do not need these (for example you are writing a layout manager
-    // that does fixed positioning of its children), you can drop all of this.
-
-    /*
-    @Override
-    public LayoutParams generateLayoutParams(AttributeSet attrs) {
-        return new FootballFieldLayout.LayoutParams(getContext(), attrs);
-    }
-*/
-
-
     // http://stackoverflow.com/questions/9398057/android-move-a-view-on-touch-move-action-move
-
     public float dX = NO_DELTA, dY = NO_DELTA;
 
     @Override

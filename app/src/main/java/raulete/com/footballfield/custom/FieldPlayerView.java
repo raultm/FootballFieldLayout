@@ -6,7 +6,6 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -26,7 +25,7 @@ public class FieldPlayerView extends LinearLayout {
     private int totalWeight = 10;
     private int numberWeight = 7;
 
-    // Settled onMeasure
+    // Settled onMeasure()
     private int width;
     private int height;
 
@@ -39,10 +38,10 @@ public class FieldPlayerView extends LinearLayout {
         super(context);
         this.fp = fieldPlayer;
         this.fc = fieldCoordinates;
-        rebuild();
+        init();
     }
 
-    private void rebuild() {
+    private void init() {
         removeAllViews();
         setOrientation(LinearLayout.VERTICAL);
         setId(R.id.player_undefined);
@@ -117,11 +116,10 @@ public class FieldPlayerView extends LinearLayout {
         View parent = (View)this.getParent();
         width = parent.getWidth() / 15;
         height = width;
-
+        fposition = FieldPosition.createFromXY((FootballFieldLayout) getParent(), fc.x(), fc.y());
         // http://stackoverflow.com/questions/13394181/inflated-children-of-custom-linearlayout-dont-show-when-overriding-onmeasure
         super.onMeasure(MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY));
         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) getLayoutParams();
-        Log.i("setPosition", width + "/" +height);
         int left = fposition.getXinPx() - (width / 2);
         int right = fposition.getYinPx() - (height / 2);
         if(left < 0){ left = 0; }
@@ -134,11 +132,7 @@ public class FieldPlayerView extends LinearLayout {
 
     public void setPlayer(FieldPlayer fieldPlayer) {
         this.fp = fieldPlayer;
-        rebuild();
-    }
-
-    public FieldCoordinates getFieldCoordinates(){
-        return fc;
+        init();
     }
 
     @Override

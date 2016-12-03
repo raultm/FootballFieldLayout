@@ -11,6 +11,10 @@ public class FieldCoordinates {
     public final float x;
     public final float y;
 
+    public static final FieldCoordinates create(){
+        return create(0,0);
+    }
+
     public static final FieldCoordinates create(float x, float y){
         return new FieldCoordinates(x, y);
     }
