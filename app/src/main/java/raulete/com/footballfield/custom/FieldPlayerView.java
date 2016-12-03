@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -19,6 +20,9 @@ public class FieldPlayerView extends LinearLayout {
     private FieldPlayer fp;
     private FieldCoordinates fc;
 
+    private int totalWeight = 10;
+    private int numberWeight = 7;
+
     public FieldPlayerView(Context context, FieldPlayer fieldPlayer) {
         this(context, fieldPlayer, FieldCoordinates.create(0,0));
 
@@ -28,18 +32,16 @@ public class FieldPlayerView extends LinearLayout {
         super(context);
         this.fp = fieldPlayer;
         this.fc = fieldCoordinates;
-        /*
-        LayoutParams params = new LayoutParams(
-                LayoutParams.WRAP_CONTENT,
-                LayoutParams.WRAP_CONTENT
-        );
-        params.setMargins(fieldCoordinates.x(), fieldCoordinates.y(), 0, 0);
-        setLayoutParams(params);
-                */
-        draw();
+
+        setLayoutParams(new LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                LayoutParams.MATCH_PARENT
+        ));
+
+        rebuild();
     }
 
-    private void draw() {
+    private void rebuild() {
         removeAllViews();
         setOrientation(LinearLayout.VERTICAL);
         setId(R.id.player_undefined);
@@ -62,10 +64,9 @@ public class FieldPlayerView extends LinearLayout {
         addView(tv);
 
         LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) tv.getLayoutParams();
-        //layoutParams.addRule(RelativeLayout.ALIGN_TOP, RelativeLayout.TRUE);
-        //layoutParams.addRule(RelativeLayout.ALIGN_BOTTOM, RelativeLayout.TRUE);
-        layoutParams.width = dip2px(40);
-        layoutParams.height = dip2px(10);
+        layoutParams.width = LayoutParams.MATCH_PARENT;
+        layoutParams.height = 0;
+        layoutParams.weight = totalWeight - numberWeight;
 
         tv.setLayoutParams(layoutParams);
     }
@@ -78,8 +79,9 @@ public class FieldPlayerView extends LinearLayout {
 
         //layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
         final float scale = getContext().getResources().getDisplayMetrics().density;
-        layoutParams.width = dip2px(40);
-        layoutParams.height = dip2px(30);
+        layoutParams.width = LayoutParams.MATCH_PARENT;
+        layoutParams.height = 0;
+        layoutParams.weight = numberWeight;
 
         tv.setText(number);
         tv.setTextColor(Color.parseColor("#FFFFFF"));
@@ -87,13 +89,6 @@ public class FieldPlayerView extends LinearLayout {
         tv.setGravity(Gravity.CENTER);
         tv.setBackgroundColor(Color.parseColor("#66000000"));
 
-
-    }
-
-    private int dip2px(int dips) {
-        // final float scale = getContext().getResources().getDisplayMetrics().density;
-        // (int) (dips * scale + 0.5f);
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dips, getResources().getDisplayMetrics());
 
     }
 
@@ -112,43 +107,19 @@ public class FieldPlayerView extends LinearLayout {
      */
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        View parent = (View)this.getParent();
+        int width = parent.getWidth() / 15;
+        int height = width;
+        // http://stackoverflow.com/questions/13394181/inflated-children-of-custom-linearlayout-dont-show-when-overriding-onmeasure
+        super.onMeasure(MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY));
     }
 
     public void setPlayer(FieldPlayer fieldPlayer) {
         this.fp = fieldPlayer;
-        draw();
+        rebuild();
     }
 
     public FieldCoordinates getFieldCoordinates(){
         return fc;
     }
 }
-
-
-/*
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="0dip"
-    android:layout_weight="1">
-    <TextView
-            android:id="@+id/player_in_field_number"
-            android:layout_width="40dip"
-            android:layout_height="30dip"
-            android:text="01"
-            android:layout_centerInParent="true"
-            android:gravity="center"
-            android:background="#66000000"/>
-    <TextView
-        android:id="@+id/player_in_field_name"
-        android:layout_below="@+id/player_in_field_number"
-        android:layout_width="40dip"
-        android:layout_height="10dip"
-        android:text="01"
-        android:layout_centerInParent="true"
-        android:gravity="center"
-        android:textSize="8sp"
-        android:background="#000000"/>
-
-</RelativeLayout>
- */
