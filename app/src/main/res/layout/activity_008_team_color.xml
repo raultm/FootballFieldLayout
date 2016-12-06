@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="raulete.com.footballfield.s002addplayer.AddPlayerActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/addMessiLocal"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="addMessiLocal"
+            android:text="Messi Local"/>
+        <Button
+            android:id="@+id/addRonaldoGuest"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="addRonaldoGuest"
+            android:text="Ronaldo Guest"/>
+
+        <Button
+            android:id="@+id/addKokeGuest"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="addKokeGuest"
+            android:text="Koke Guest"/>
+    </LinearLayout>
+
+    <raulete.com.footballfield.custom.FootballFieldLayout
+        android:id="@+id/activity_field"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

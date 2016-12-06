@@ -23,6 +23,7 @@
         <activity android:name=".s005aftermovedcallback.AfterMovedPlayerCallbackActivity"></activity>
         <activity android:name=".s006exchangeplayer.ExchangePlayerActivity"></activity>
         <activity android:name=".s007playerteam.PlayerTeamActivity"></activity>
+        <activity android:name=".s008teamcolor.TeamColorActivity"></activity>
         <activity android:name=".s012adplayercustomposition.CustomPositionActivity"></activity>
     </application>
 

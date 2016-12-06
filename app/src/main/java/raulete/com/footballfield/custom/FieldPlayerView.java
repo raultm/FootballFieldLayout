@@ -29,6 +29,8 @@ public class FieldPlayerView extends LinearLayout {
     private int width;
     private int height;
 
+    private int numberTextColor = Color.parseColor("#FFFFFF");
+
     public FieldPlayerView(Context context, FieldPlayer fieldPlayer) {
         this(context, fieldPlayer, FieldCoordinates.create(0,0));
 
@@ -45,6 +47,11 @@ public class FieldPlayerView extends LinearLayout {
         removeAllViews();
         setOrientation(LinearLayout.VERTICAL);
         setId(R.id.player_undefined);
+        if(fp.getTeam() != null)
+        {
+            setBackgroundColor(fp.getTeam().getBackGroundColor());
+            numberTextColor = fp.getTeam().getTextColor();
+        }
         addNumber(fp.getNumber());
         addName(fp.getShortName());
     }
@@ -84,10 +91,10 @@ public class FieldPlayerView extends LinearLayout {
         layoutParams.weight = numberWeight;
 
         tv.setText(number);
-        tv.setTextColor(Color.parseColor("#FFFFFF"));
+        tv.setTextColor(numberTextColor);
         tv.setLayoutParams(layoutParams);
         tv.setGravity(Gravity.CENTER);
-        tv.setBackgroundColor(Color.parseColor("#66000000"));
+        //tv.setBackgroundColor(Color.parseColor("#66000000"));
 
 
     }
