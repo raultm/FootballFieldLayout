@@ -25,6 +25,6 @@ public class MovePlayerActivity extends AppCompatActivity {
     }
 
     public void addPlayer() {
-        footballFieldLayout.addPlayer(new BaseFieldPlayer("Messi", "10"));
+        footballFieldLayout.addPlayerLocal(BaseFieldPlayer.messi());
     }
 }

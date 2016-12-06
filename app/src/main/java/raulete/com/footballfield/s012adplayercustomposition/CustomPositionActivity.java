@@ -15,7 +15,7 @@ public class CustomPositionActivity extends AppCompatActivity {
 
     FootballFieldLayout footballFieldLayout;
 
-    private final FieldPlayer messi = new BaseFieldPlayer("Messi", "10");
+    private final FieldPlayer messi = BaseFieldPlayer.create("Messi", "10");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +27,7 @@ public class CustomPositionActivity extends AppCompatActivity {
     }
 
     public void addPlayer(View view) {
-        footballFieldLayout.addPlayer(messi, FieldCoordinates.create(50f, 50f));
+        footballFieldLayout.addPlayerLocal(messi, FieldCoordinates.create(50f, 50f));
     }
 
 

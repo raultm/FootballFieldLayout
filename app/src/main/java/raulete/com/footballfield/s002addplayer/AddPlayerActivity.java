@@ -22,7 +22,7 @@ public class AddPlayerActivity extends AppCompatActivity {
     }
 
     public void addPlayer(View view) {
-        footballFieldLayout.addPlayer(new BaseFieldPlayer("Messi", "10"));
+        footballFieldLayout.addPlayerLocal(BaseFieldPlayer.messi());
         footballFieldLayout.invalidate();
     }
 }

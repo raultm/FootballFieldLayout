@@ -3,8 +3,6 @@
     package="raulete.com.footballfield">
 
 
-    <uses-permission android:name="android.permission.INJECT_EVENTS"/>
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -24,6 +22,7 @@
         <activity android:name=".s004moveonlongclick.MoveOnLongClickActivity"></activity>
         <activity android:name=".s005aftermovedcallback.AfterMovedPlayerCallbackActivity"></activity>
         <activity android:name=".s006exchangeplayer.ExchangePlayerActivity"></activity>
+        <activity android:name=".s007playerteam.PlayerTeamActivity"></activity>
         <activity android:name=".s012adplayercustomposition.CustomPositionActivity"></activity>
     </application>
 

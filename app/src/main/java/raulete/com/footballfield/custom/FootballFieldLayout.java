@@ -10,6 +10,8 @@ import android.widget.RelativeLayout;
 import android.widget.RemoteViews;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 import raulete.com.footballfield.R;
 
@@ -69,6 +71,9 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
     private OnPlayerActionsCallback onPlayerActionsCallback = uselessOnPlayerCallback;
 
 
+    private List<FieldTeamView> teams = new ArrayList<>();
+
+
     private FieldPlayerCollection fpc = new FieldPlayerCollection();
 
     public FootballFieldLayout(Context context) {
@@ -84,16 +89,71 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
         setBackgroundResource(R.mipmap.football_field);
     }
 
-    public void addPlayer(FieldPlayer player) {
-        addPlayer(player, FieldCoordinates.create());
+    private final static int LOCAL_TEAM = 1;
+    private final static int GUEST_TEAM = 2;
+
+    private FieldTeam localTeam;
+    private FieldTeam guestTeam;
+
+    private int teamOnLeft = LOCAL_TEAM;
+
+    public void addPlayerLocal(FieldPlayer player) {
+        addPlayer(LOCAL_TEAM, player);
     }
 
-    public void addPlayer(FieldPlayer player, FieldCoordinates fieldCoordinates) {
+    public void addPlayerLocal(FieldPlayer player, FieldCoordinates fieldCoordinates) {
+        addPlayer(LOCAL_TEAM, player, fieldCoordinates);
+    }
+
+    public void addPlayerGuest(FieldPlayer player) {
+        addPlayer(GUEST_TEAM, player);
+    }
+
+    public void addPlayerGuest(FieldPlayer player, FieldCoordinates fieldCoordinates) {
+        addPlayer(GUEST_TEAM, player, fieldCoordinates);
+    }
+
+    private void addPlayer(int teamType, FieldPlayer player) {
+        addPlayer(teamType, player, null);
+    }
+
+    private void addPlayer(int teamType, FieldPlayer player, FieldCoordinates fieldCoordinates) throws IllegalArgumentException{
+        if (teamType == LOCAL_TEAM) {
+            if (localTeam == null) {
+                localTeam = player.getTeam();
+            } else if (localTeam != player.getTeam()) {
+                throw new IllegalArgumentException();
+            } else {
+
+            }
+            if(fieldCoordinates == null){
+                fieldCoordinates = FieldCoordinates.create();
+            }
+        }
+
+        if (teamType == GUEST_TEAM) {
+            if (guestTeam == null) {
+                guestTeam = player.getTeam();
+            } else if (guestTeam != player.getTeam()) {
+                throw new IllegalArgumentException();
+            } else {
+
+            }
+            if(fieldCoordinates == null){
+                fieldCoordinates = FieldCoordinates.create();
+            }
+        }
+
         FieldPlayerView fpv = new FieldPlayerView(getContext(), player, fieldCoordinates);
         addPlayerView(fpv);
     }
 
     public void addPlayerView(FieldPlayerView fpv) {
+        if (teams.size() == 0) {
+            FieldTeamView ftv = new FieldTeamView(this.getContext(), R.id.field_left_team_shield, fpv.getFieldPlayer().getTeam(), FieldCoordinates.create(25f, 50f));
+            teams.add(ftv);
+            addView(ftv, 0);
+        }
         fpc.add(fpv);
         addView(fpv);
         activateOnTouchListener(fpv);

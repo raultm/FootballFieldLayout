@@ -11,6 +11,7 @@ import raulete.com.footballfield.s003moveplayer.MovePlayerActivity;
 import raulete.com.footballfield.s004moveonlongclick.MoveOnLongClickActivity;
 import raulete.com.footballfield.s005aftermovedcallback.AfterMovedPlayerCallbackActivity;
 import raulete.com.footballfield.s006exchangeplayer.ExchangePlayerActivity;
+import raulete.com.footballfield.s007playerteam.PlayerTeamActivity;
 import raulete.com.footballfield.s012adplayercustomposition.CustomPositionActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -43,6 +44,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void openExchangePlayer(View view) {
         openActivity(ExchangePlayerActivity.class);
+    }
+
+    public void openPlayerTeam(View view) {
+        openActivity(PlayerTeamActivity.class);
     }
 
     public void openCustomPosition(View view) {

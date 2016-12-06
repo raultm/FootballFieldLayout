@@ -9,4 +9,6 @@ public interface FieldPlayer {
     String getNumber();
 
     String getShortName();
+
+    FieldTeam getTeam();
 }
