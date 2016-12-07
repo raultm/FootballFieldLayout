@@ -11,24 +11,28 @@ import raulete.com.footballfield.custom.FieldTeam;
 
 public class BaseFieldPlayer implements FieldPlayer {
 
+    private static final BaseFieldTeam fcb = BaseFieldTeam.fcb();
+    private static final BaseFieldTeam rmd = BaseFieldTeam.rmd();
+    private static final BaseFieldTeam atm = BaseFieldTeam.atm();
+
     private final String name;
     private final String number;
     private FieldTeam team;
 
     public final static BaseFieldPlayer messi(){
-        return create("Messi", "10", BaseFieldTeam.fcb());
+        return create("Messi", "10", fcb);
     }
 
     public final static BaseFieldPlayer neymar(){
-        return create("Neymar", "11", BaseFieldTeam.fcb());
+        return create("Neymar", "11", fcb);
     }
 
     public final static BaseFieldPlayer ronaldo(){
-        return create("Ronaldo", "7", BaseFieldTeam.rmd());
+        return create("Ronaldo", "7", rmd);
     }
 
     public final static BaseFieldPlayer koke(){
-        return create("Koke", "6", BaseFieldTeam.atm());
+        return create("Koke", "6", atm);
     }
 
 

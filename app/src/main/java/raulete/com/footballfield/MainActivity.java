@@ -15,6 +15,7 @@ import raulete.com.footballfield.s007playerteam.PlayerTeamActivity;
 import raulete.com.footballfield.s008teamcolor.TeamColorActivity;
 import raulete.com.footballfield.s009movecallback.MovingCallbackActivity;
 import raulete.com.footballfield.s010clickplayer.ClickPlayerActivity;
+import raulete.com.footballfield.s011exchangesameteam.ExchangeSameTeamActivity;
 import raulete.com.footballfield.s012adplayercustomposition.CustomPositionActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -67,6 +68,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void openCustomPosition(View view) {
         openActivity(CustomPositionActivity.class);
+    }
+
+    public void openExchangeSameTeam(View view) {
+        openActivity(ExchangeSameTeamActivity.class);
     }
 
     private void openActivity(Class<?> cls){
