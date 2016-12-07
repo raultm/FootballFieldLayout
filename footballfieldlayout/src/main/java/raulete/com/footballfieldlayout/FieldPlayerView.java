@@ -129,13 +129,13 @@ public class FieldPlayerView extends LinearLayout {
     }
 
     public float handleXBoundaries(float xPX){
-        return handleXBoundaries(xPX, 0, 100)
+        return handleXBoundaries(xPX, 0, 100);
     }
 
     public float handleXBoundaries(float xPX, int min, int max){
         float left = xPX - (width / 2);
         if(left < min){ left = 0; }
-        if(left + (width / 2) > max){ left = max - (width / 2);
+        if(left + (width / 2) > max){ left = max - (width / 2); }
         return left;
     }
 

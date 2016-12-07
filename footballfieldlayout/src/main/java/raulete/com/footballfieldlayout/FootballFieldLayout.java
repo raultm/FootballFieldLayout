@@ -267,8 +267,10 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
     public void move(FieldPlayerView view, float x, float y, int duration){
 
         view.animate()
-                .x(view.handleXBoundaries(x))
-                .y(view.handleYBoundaries(y))
+                //.x(view.handleXBoundaries(x, 0, getWidth()))
+                //.y(view.handleYBoundaries(y, 0, getHeight()))
+                .x(x)
+                .y(y)
                 .setDuration(duration)
                 .start();
     }
