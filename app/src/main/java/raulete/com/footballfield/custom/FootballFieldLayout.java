@@ -276,7 +276,7 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
     }
 
     public void exchange(FieldPlayer playerFromFieldToBench, FieldPlayer playerFromBenchToField) {
-        if(playerFromBenchToField.getTeam() != playerFromFieldToBench.getTeam()){
+        if(!playerFromBenchToField.getTeam().equals(playerFromFieldToBench.getTeam())){
             throw new IllegalArgumentException();
         }
         fpc.exchange(playerFromFieldToBench, playerFromBenchToField);
