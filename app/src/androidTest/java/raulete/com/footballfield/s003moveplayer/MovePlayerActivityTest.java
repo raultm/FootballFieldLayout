@@ -43,7 +43,6 @@ public class MovePlayerActivityTest {
         float[] beginCoord = {view.getX(), view.getY()};
         onView(withId(R.id.player_undefined)).perform(swipeDown());
         onView(withId(R.id.player_undefined)).perform(swipeRight());
-        onView(withId(R.id.player_undefined)).perform(swipeDown());
         float[] endCoord = {view.getX(), view.getY()};
 
         assertThat("X", beginCoord[0], not(equalTo(endCoord[0])));

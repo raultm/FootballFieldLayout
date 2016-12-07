@@ -160,6 +160,22 @@ public class FieldPlayerView extends LinearLayout {
     }
 
     public float[] getCoords() {
-        return new float[]{getX() + (width / 2), getY() + (height / 2)};
+        return new float[]{getXCenter(), getYCenter()};
+    }
+
+    public float getXCenter(){
+        return super.getX() + (width / 2);
+    }
+
+    public float getYCenter(){
+        return super.getY() + (height / 2);
+    }
+
+    public float handleYBoundariesForTopLeftCorner(float y, int i, int height) {
+        return handleYBoundaries(y, i, height) + (this.height/2);
+    }
+
+    public float handleXBoundariesForTopLeftCorner(float x, int i, int width) {
+        return handleXBoundaries(x, i, width) + (this.width/2);
     }
 }

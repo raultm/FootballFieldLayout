@@ -224,7 +224,7 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
         switch (event.getAction()) {
 
             case MotionEvent.ACTION_DOWN:
-                setDelta(view, event);
+                setDelta(fpv, event);
                 break;
             case MotionEvent.ACTION_MOVE:
                 if(onPlayerActionsCallback.moving(fpv, fposition)) {
@@ -243,9 +243,9 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
         return true;
     }
 
-    private void setDelta(View view, MotionEvent event) {
-        dX = view.getX() - event.getRawX();
-        dY = view.getY() - event.getRawY();
+    private void setDelta(FieldPlayerView view, MotionEvent event) {
+        dX = view.getXCenter() - event.getRawX();
+        dY = view.getYCenter() - event.getRawY();
     }
 
     private void resetDelta() {
@@ -265,10 +265,9 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
     }
 
     public void move(FieldPlayerView view, float x, float y, int duration){
-
+        x = view.handleXBoundariesForTopLeftCorner(x, 0, getWidth());
+        y = view.handleYBoundariesForTopLeftCorner(y, 0, getHeight());
         view.animate()
-                //.x(view.handleXBoundaries(x, 0, getWidth()))
-                //.y(view.handleYBoundaries(y, 0, getHeight()))
                 .x(x)
                 .y(y)
                 .setDuration(duration)
