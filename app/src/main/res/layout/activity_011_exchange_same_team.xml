@@ -28,7 +28,7 @@
     </LinearLayout>
 
 
-    <raulete.com.footballfield.custom.FootballFieldLayout
+    <raulete.com.footballfieldlayout.FootballFieldLayout
         android:id="@+id/activity_field"
         android:layout_below="@id/activity_exchange_button"
         android:layout_width="match_parent"

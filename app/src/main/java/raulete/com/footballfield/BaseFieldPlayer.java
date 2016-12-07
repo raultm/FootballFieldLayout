@@ -1,9 +1,8 @@
 package raulete.com.footballfield;
 
-import java.lang.reflect.Field;
 
-import raulete.com.footballfield.custom.FieldPlayer;
-import raulete.com.footballfield.custom.FieldTeam;
+import raulete.com.footballfieldlayout.FieldPlayer;
+import raulete.com.footballfieldlayout.FieldTeam;
 
 /**
  * Created by raulete on 18/11/16.

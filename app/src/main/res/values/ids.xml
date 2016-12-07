@@ -3,5 +3,4 @@
     <item name="player_undefined" type="id">player_undefined</item>
     <item name="team_undefined" type="id">team_undefined</item>
 
-    <item name="field_left_team_shield" type="id">field_left_team_shield</item>
 </resources>

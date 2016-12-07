@@ -2,8 +2,9 @@ package raulete.com.footballfield;
 
 import android.graphics.Color;
 
-import raulete.com.footballfield.custom.FieldImageLoader;
-import raulete.com.footballfield.custom.FieldTeamView;
+import raulete.com.footballfieldlayout.FieldImageLoader;
+import raulete.com.footballfieldlayout.FieldTeamView;
+
 
 /**
  * Created by raulete on 5/12/16.

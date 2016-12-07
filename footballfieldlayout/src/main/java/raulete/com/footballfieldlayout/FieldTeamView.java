@@ -1,20 +1,9 @@
-package raulete.com.footballfield.custom;
+package raulete.com.footballfieldlayout;
 
 import android.content.Context;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
-
-import java.io.IOException;
-import java.net.URL;
-
-import raulete.com.footballfield.R;
 
 /**
  * Created by raulete on 16/11/16.
@@ -59,8 +48,8 @@ public class FieldTeamView extends ImageView {
         // http://stackoverflow.com/questions/13394181/inflated-children-of-custom-linearlayout-dont-show-when-overriding-onmeasure
         super.onMeasure(MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY));
         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) getLayoutParams();
-        int left = fposition.getXinPx() - (width / 2);
-        int right = fposition.getYinPx() - (height / 2);
+        int left = (int)fposition.getXinPx() - (width / 2);
+        int right = (int)fposition.getYinPx() - (height / 2);
         if(left < 0){ left = 0; }
         if(right < 0){ right = 0; }
 

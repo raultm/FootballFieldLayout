@@ -1,18 +1,15 @@
 package raulete.com.footballfield.s008teamcolor;
 
 import android.graphics.Color;
-import android.support.test.espresso.PerformException;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.view.View;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import raulete.com.footballfield.R;
-import raulete.com.footballfield.s007playerteam.PlayerTeamActivity;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;

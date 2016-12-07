@@ -6,8 +6,8 @@ import android.view.View;
 
 import raulete.com.footballfield.BaseFieldPlayer;
 import raulete.com.footballfield.R;
-import raulete.com.footballfield.custom.FieldPlayer;
-import raulete.com.footballfield.custom.FootballFieldLayout;
+import raulete.com.footballfieldlayout.FieldPlayer;
+import raulete.com.footballfieldlayout.FootballFieldLayout;
 
 public class ExchangeSameTeamActivity extends AppCompatActivity {
 

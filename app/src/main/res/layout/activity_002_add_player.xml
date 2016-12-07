@@ -12,7 +12,7 @@
         android:text="Add Player"
         android:onClick="addPlayer"/>
 
-    <raulete.com.footballfield.custom.FootballFieldLayout
+    <raulete.com.footballfieldlayout.FootballFieldLayout
         android:id="@+id/activity_field"
         android:layout_below="@+id/activity_add_button"
         android:layout_width="match_parent"

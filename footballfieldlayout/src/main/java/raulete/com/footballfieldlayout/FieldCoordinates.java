@@ -1,6 +1,4 @@
-package raulete.com.footballfield.custom;
-
-import java.lang.reflect.Field;
+package raulete.com.footballfieldlayout;
 
 /**
  * Created by raulete on 2/12/16.

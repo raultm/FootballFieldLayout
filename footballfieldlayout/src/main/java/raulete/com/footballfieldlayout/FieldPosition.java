@@ -1,7 +1,6 @@
-package raulete.com.footballfield.custom;
+package raulete.com.footballfieldlayout;
 
 import android.graphics.Rect;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -108,11 +107,11 @@ public class FieldPosition {
         return (int) positionY;
     }
 
-    public int getXinPx(){
+    public float getXinPx(){
         return (int)(getX() * fieldWidth / 100);
     }
 
-    public int getYinPx(){
+    public float getYinPx(){
         return (int)(getY() * fieldHeight / 100);
     }
 

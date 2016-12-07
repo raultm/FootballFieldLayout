@@ -9,14 +9,10 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.lang.reflect.Field;
-
 import raulete.com.footballfield.R;
-import raulete.com.footballfield.custom.FieldPlayer;
-import raulete.com.footballfield.custom.FieldPlayerView;
-import raulete.com.footballfield.custom.FieldPosition;
-import raulete.com.footballfield.custom.FootballFieldLayout;
-import raulete.com.footballfield.s005aftermovedcallback.AfterMovedPlayerCallbackActivity;
+import raulete.com.footballfieldlayout.FieldPlayerView;
+import raulete.com.footballfieldlayout.FieldPosition;
+import raulete.com.footballfieldlayout.FootballFieldLayout;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.swipeDown;

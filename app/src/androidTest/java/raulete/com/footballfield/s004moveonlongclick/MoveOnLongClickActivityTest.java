@@ -1,13 +1,11 @@
 package raulete.com.footballfield.s004moveonlongclick;
 
-import android.app.Instrumentation;
 import android.app.UiAutomation;
 import android.os.SystemClock;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.support.v7.widget.ThemedSpinnerAdapter;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -16,9 +14,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import raulete.com.footballfield.OnClickAndSwipeAction;
 import raulete.com.footballfield.R;
-import raulete.com.footballfield.s003moveplayer.MovePlayerActivity;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.longClick;

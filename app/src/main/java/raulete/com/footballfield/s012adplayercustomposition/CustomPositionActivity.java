@@ -6,10 +6,9 @@ import android.view.View;
 
 import raulete.com.footballfield.BaseFieldPlayer;
 import raulete.com.footballfield.R;
-import raulete.com.footballfield.custom.FieldCoordinates;
-import raulete.com.footballfield.custom.FieldPlayer;
-import raulete.com.footballfield.custom.FieldPosition;
-import raulete.com.footballfield.custom.FootballFieldLayout;
+import raulete.com.footballfieldlayout.FieldCoordinates;
+import raulete.com.footballfieldlayout.FieldPlayer;
+import raulete.com.footballfieldlayout.FootballFieldLayout;
 
 public class CustomPositionActivity extends AppCompatActivity {
 

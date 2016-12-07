@@ -1,4 +1,4 @@
-package raulete.com.footballfield.custom;
+package raulete.com.footballfieldlayout;
 
 import android.content.Context;
 import android.os.Vibrator;
@@ -6,15 +6,11 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.RemoteViews;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
-
-import raulete.com.footballfield.R;
 
 /**
  * Example of writing a custom layout manager.  This is a fairly full-featured
@@ -66,7 +62,7 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
     public final static int PLAYER_MOVE_ON_LONG_CLICK = 100;
     public final static int PLAYER_MOVE_ON_ADDED = 200;
 
-    public final static int NO_DELTA = -10000;
+    private final static int NO_DELTA = -10000;
 
     private boolean vibrationFeedback = true;
 
@@ -98,8 +94,6 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
 
     private FieldTeam localTeam;
     private FieldTeam guestTeam;
-
-    private int teamOnLeft = LOCAL_TEAM;
 
     public void addPlayerLocal(FieldPlayer player) {
         addPlayer(LOCAL_TEAM, player);
@@ -234,7 +228,7 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
                 break;
             case MotionEvent.ACTION_MOVE:
                 if(onPlayerActionsCallback.moving(fpv, fposition)) {
-                    move(view, event);
+                    move(fpv, event);
                 }
                 break;
             case MotionEvent.ACTION_UP:
@@ -249,24 +243,33 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
         return true;
     }
 
-    public void setDelta(View view, MotionEvent event) {
+    private void setDelta(View view, MotionEvent event) {
         dX = view.getX() - event.getRawX();
         dY = view.getY() - event.getRawY();
     }
 
-    public void resetDelta() {
+    private void resetDelta() {
         dX = NO_DELTA;
         dY = NO_DELTA;
     }
 
-    public void move(View view, MotionEvent event) {
+    private void move(FieldPlayerView view, MotionEvent event) {
         if (dX == NO_DELTA || dY == NO_DELTA) {
             setDelta(view, event);
         }
+        move(view, event.getRawX() + dX, event.getRawY() + dY);
+    }
+
+    public void move(FieldPlayerView view, float x, float y){
+        move(view, x, y, 0);
+    }
+
+    public void move(FieldPlayerView view, float x, float y, int duration){
+
         view.animate()
-                .x(event.getRawX() + dX)
-                .y(event.getRawY() + dY)
-                .setDuration(0)
+                .x(view.handleXBoundaries(x))
+                .y(view.handleYBoundaries(y))
+                .setDuration(duration)
                 .start();
     }
 

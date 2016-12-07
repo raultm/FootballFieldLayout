@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import raulete.com.footballfield.BaseFieldPlayer;
 import raulete.com.footballfield.R;
-import raulete.com.footballfield.custom.FootballFieldLayout;
+import raulete.com.footballfieldlayout.FootballFieldLayout;
 
 public class MoveOnLongClickActivity extends AppCompatActivity {
 

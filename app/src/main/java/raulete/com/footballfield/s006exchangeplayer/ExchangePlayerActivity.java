@@ -3,13 +3,11 @@ package raulete.com.footballfield.s006exchangeplayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.TextView;
 
 import raulete.com.footballfield.BaseFieldPlayer;
 import raulete.com.footballfield.R;
-import raulete.com.footballfield.custom.FieldPlayer;
-import raulete.com.footballfield.custom.FieldPosition;
-import raulete.com.footballfield.custom.FootballFieldLayout;
+import raulete.com.footballfieldlayout.FieldPlayer;
+import raulete.com.footballfieldlayout.FootballFieldLayout;
 
 public class ExchangePlayerActivity extends AppCompatActivity {
 

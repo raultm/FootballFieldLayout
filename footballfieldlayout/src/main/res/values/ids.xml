@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="field_left_team_shield" type="id">field_left_team_shield</item>
+
+    <item name="player_undefined" type="id">player_undefined</item>
+    <item name="team_undefined" type="id">team_undefined</item>
+</resources>

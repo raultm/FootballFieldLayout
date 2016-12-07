@@ -1,16 +1,13 @@
-package raulete.com.footballfield.custom;
+package raulete.com.footballfieldlayout;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import raulete.com.footballfield.R;
 
 /**
  * Created by raulete on 16/11/16.
@@ -127,15 +124,26 @@ public class FieldPlayerView extends LinearLayout {
         // http://stackoverflow.com/questions/13394181/inflated-children-of-custom-linearlayout-dont-show-when-overriding-onmeasure
         super.onMeasure(MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY));
         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) getLayoutParams();
-        int left = fposition.getXinPx() - (width / 2);
-        int right = fposition.getYinPx() - (height / 2);
-        if(left < 0){ left = 0; }
-        if(right < 0){ right = 0; }
-
-        params.leftMargin = left;
-        params.topMargin = right;
+        params.leftMargin = (int)handleXBoundaries(fposition.getXinPx(), 0, parent.getWidth());
+        params.topMargin = (int)handleYBoundaries(fposition.getYinPx(), 0, parent.getHeight());
     }
 
+    public float handleXBoundaries(float xPX){
+        return handleXBoundaries(xPX, 0, 100)
+    }
+
+    public float handleXBoundaries(float xPX, int min, int max){
+        float left = xPX - (width / 2);
+        if(left < min){ left = 0; }
+        if(left + (width / 2) > max){ left = max - (width / 2);
+        return left;
+    }
+
+    public float handleYBoundaries(float yPX, int min, int max){
+        float top = yPX - (height / 2);
+        if(top < 0){ top = 0; }
+        return top;
+    }
 
     public void setPlayer(FieldPlayer fieldPlayer) {
         this.fp = fieldPlayer;

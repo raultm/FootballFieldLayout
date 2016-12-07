@@ -6,10 +6,9 @@ import android.widget.TextView;
 
 import raulete.com.footballfield.BaseFieldPlayer;
 import raulete.com.footballfield.R;
-import raulete.com.footballfield.custom.FieldPlayer;
-import raulete.com.footballfield.custom.FieldPlayerView;
-import raulete.com.footballfield.custom.FieldPosition;
-import raulete.com.footballfield.custom.FootballFieldLayout;
+import raulete.com.footballfieldlayout.FieldPlayerView;
+import raulete.com.footballfieldlayout.FieldPosition;
+import raulete.com.footballfieldlayout.FootballFieldLayout;
 
 public class MovingCallbackActivity extends AppCompatActivity {
 

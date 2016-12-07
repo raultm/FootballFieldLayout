@@ -6,7 +6,7 @@ import android.view.View;
 
 import raulete.com.footballfield.BaseFieldPlayer;
 import raulete.com.footballfield.R;
-import raulete.com.footballfield.custom.FootballFieldLayout;
+import raulete.com.footballfieldlayout.FootballFieldLayout;
 
 public class AddPlayerActivity extends AppCompatActivity {
 

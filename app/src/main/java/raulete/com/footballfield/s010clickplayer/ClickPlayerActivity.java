@@ -2,16 +2,12 @@ package raulete.com.footballfield.s010clickplayer;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import raulete.com.footballfield.BaseFieldPlayer;
 import raulete.com.footballfield.R;
-import raulete.com.footballfield.custom.FieldPlayer;
-import raulete.com.footballfield.custom.FieldPlayerView;
-import raulete.com.footballfield.custom.FieldPosition;
-import raulete.com.footballfield.custom.FootballFieldLayout;
+import raulete.com.footballfieldlayout.FieldPlayerView;
+import raulete.com.footballfieldlayout.FootballFieldLayout;
 
 public class ClickPlayerActivity extends AppCompatActivity {
 
