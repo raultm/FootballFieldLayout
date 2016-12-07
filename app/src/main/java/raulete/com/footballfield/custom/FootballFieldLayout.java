@@ -72,6 +72,7 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
 
     private int MOVE_ON_ACTION = PLAYER_MOVE_ON_LONG_CLICK;
     private OnPlayerActionsCallback onPlayerActionsCallback = uselessOnPlayerCallback;
+    private OnPlayerClickCallback onPlayerClickCallback = uselessOnPlayerClickCallback;
 
 
     private List<FieldTeamView> teams = new ArrayList<>();
@@ -151,7 +152,7 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
         addPlayerView(fpv);
     }
 
-    public void addPlayerView(FieldPlayerView fpv) {
+    public void addPlayerView(final FieldPlayerView fpv) {
         if (teams.size() == 0) {
             FieldTeamView ftv = new FieldTeamView(this.getContext(), R.id.field_left_team_shield, fpv.getFieldPlayer().getTeam(), FieldCoordinates.create(25f, 50f));
             teams.add(ftv);
@@ -160,6 +161,7 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
         fpc.add(fpv);
         addView(fpv);
         activateOnTouchListener(fpv);
+
     }
 
     public void setActionToActivateOnTouchListener(int action) {
@@ -173,12 +175,20 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
                 break;
             case PLAYER_MOVE_ON_LONG_CLICK:
             default:
+                final FieldPlayerView fpv = (FieldPlayerView) view;
                 view.setOnLongClickListener(new OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
                         vibration();
                         v.setOnTouchListener(FootballFieldLayout.this);
                         return true;
+                    }
+                });
+                view.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onPlayerClickCallback.click(fpv);
+                        Log.i("Click", fpv.getFieldPlayer().getShortName());
                     }
                 });
                 break;
@@ -223,12 +233,12 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
                 setDelta(view, event);
                 break;
             case MotionEvent.ACTION_MOVE:
-                if(onPlayerActionsCallback.moving(fpv.getFieldPlayer(), fposition)) {
+                if(onPlayerActionsCallback.moving(fpv, fposition)) {
                     move(view, event);
                 }
                 break;
             case MotionEvent.ACTION_UP:
-                onPlayerActionsCallback.moved(fpv.getFieldPlayer(), fposition);
+                onPlayerActionsCallback.moved(fpv, fposition);
                 view.setOnTouchListener(null);
                 activateOnTouchListener(view);
                 resetDelta();
@@ -269,19 +279,35 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
         fpc.exchange(playerFromFieldToBench, playerFromBenchToField);
     }
 
+    public void setOnClickPlayerListener(OnPlayerClickCallback cb) {
+         onPlayerClickCallback = cb;
+    }
+
     public interface OnPlayerActionsCallback {
-        boolean moving(FieldPlayer fPlayer, FieldPosition fPosition);
-        void moved(FieldPlayer fPlayer, FieldPosition fPosition);
+        boolean moving(FieldPlayerView fPlayer, FieldPosition fPosition);
+        void moved(FieldPlayerView fPlayer, FieldPosition fPosition);
+    }
+
+    public interface OnPlayerClickCallback {
+        void click(FieldPlayerView fPlayer);
     }
 
     private final static OnPlayerActionsCallback uselessOnPlayerCallback = new OnPlayerActionsCallback() {
         @Override
-        public boolean moving(FieldPlayer fPlayer, FieldPosition fPosition) {
+        public boolean moving(FieldPlayerView fPlayer, FieldPosition fPosition) {
             return true;
         }
 
         @Override
-        public void moved(FieldPlayer fp, FieldPosition fieldPosition) {
+        public void moved(FieldPlayerView fp, FieldPosition fieldPosition) {
+
+        }
+    };
+
+    private final static OnPlayerClickCallback uselessOnPlayerClickCallback = new OnPlayerClickCallback() {
+
+        @Override
+        public void click(FieldPlayerView fPlayer) {
 
         }
     };

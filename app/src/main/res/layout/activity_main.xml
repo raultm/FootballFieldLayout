@@ -24,6 +24,12 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="Click Callback"
+        android:onClick="openClickCallback"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:text="Moving Callback"
         android:onClick="openMovingCallback"/>
 

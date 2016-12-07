@@ -7,6 +7,7 @@ import android.widget.TextView;
 import raulete.com.footballfield.BaseFieldPlayer;
 import raulete.com.footballfield.R;
 import raulete.com.footballfield.custom.FieldPlayer;
+import raulete.com.footballfield.custom.FieldPlayerView;
 import raulete.com.footballfield.custom.FieldPosition;
 import raulete.com.footballfield.custom.FootballFieldLayout;
 
@@ -32,13 +33,13 @@ public class MovingCallbackActivity extends AppCompatActivity {
 
         footballFieldLayout.setOnPlayerActionsCallback(new FootballFieldLayout.OnPlayerActionsCallback() {
             @Override
-            public boolean moving(FieldPlayer fPlayer, FieldPosition fPosition) {
+            public boolean moving(FieldPlayerView fPlayer, FieldPosition fPosition) {
                 currentPosition.setText(fPosition.getCoords());
                 return true;
             }
 
             @Override
-            public void moved(FieldPlayer fp, FieldPosition fieldPosition) {
+            public void moved(FieldPlayerView fp, FieldPosition fieldPosition) {
                fieldCoords.setText(fieldPosition.getFieldCoords());
                fieldDimen.setText(fieldPosition.getFieldDimen());
                pointCoords.setText(fieldPosition.getCoords());

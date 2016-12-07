@@ -34,20 +34,6 @@ public class FieldPosition {
         int[] coordinates = new int[2];
         footballFieldLayout.getLocationOnScreen(coordinates);
 
-        Log.d("WIDTH        :", String.valueOf(rectf.width()));
-        Log.d("HEIGHT       :", String.valueOf(rectf.height()));
-        Log.d("left         :", String.valueOf(rectf.left));
-        Log.d("right        :", String.valueOf(rectf.right));
-        Log.d("top          :", String.valueOf(rectf.top));
-        Log.d("bottom       :", String.valueOf(rectf.bottom));
-
-        Log.d("x          :", String.valueOf(coordinates[X]));
-        Log.d("y          :", String.valueOf(coordinates[Y]));
-
-        Log.i("s005", "event (" + event.getRawX() + ", " + event.getRawY() + ")");
-        Log.i("s005", "event (" + event.getX() + ", " + event.getY() + ")");
-        Log.i("s005", "field (" + footballFieldLayout.getX() + ", " + footballFieldLayout.getY() + ")");
-        Log.i("s005", "field (" + footballFieldLayout.getWidth() + ", " + footballFieldLayout.getHeight() + ")");
         // float positionX = (event.getRawX() - footballFieldLayout.getX()) * 100 / footballFieldLayout.getWidth();
         float positionX = (event.getRawX() - coordinates[X]) * 100 / footballFieldLayout.getWidth();
         //float positionY = (event.getRawY() - footballFieldLayout.getY()) * 100 / footballFieldLayout.getHeight();

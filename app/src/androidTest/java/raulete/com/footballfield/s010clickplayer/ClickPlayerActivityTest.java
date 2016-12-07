@@ -1,4 +1,4 @@
-package raulete.com.footballfield.s009movecallback;
+package raulete.com.footballfield.s010clickplayer;
 
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
@@ -9,16 +9,13 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.lang.reflect.Field;
-
 import raulete.com.footballfield.R;
-import raulete.com.footballfield.custom.FieldPlayer;
 import raulete.com.footballfield.custom.FieldPlayerView;
 import raulete.com.footballfield.custom.FieldPosition;
 import raulete.com.footballfield.custom.FootballFieldLayout;
-import raulete.com.footballfield.s005aftermovedcallback.AfterMovedPlayerCallbackActivity;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.swipeDown;
 import static android.support.test.espresso.action.ViewActions.swipeRight;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -34,37 +31,23 @@ import static org.mockito.Mockito.verify;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class MovingPlayerCallbackActivityTest {
+public class ClickPlayerActivityTest {
 
     @Rule
-    public ActivityTestRule<MovingCallbackActivity> mActivityRule = new ActivityTestRule(MovingCallbackActivity.class);
-
-    @Test
-    public void afterPlayerIsMovedTextOfPositionInfoChanges() throws InterruptedException {
-        onView(withId(R.id.activity_field)).check(matches(isDisplayed()));
-        TextView tv = (TextView) mActivityRule.getActivity().findViewById(R.id.current_position);
-
-        String beginCoord = tv.getText().toString();
-        onView(withId(R.id.player_undefined)).perform(swipeRight());
-        onView(withId(R.id.player_undefined)).perform(swipeDown());
-        String endCoord = tv.getText().toString();
-
-        assertThat(beginCoord, not(equalTo(endCoord)));
-    }
+    public ActivityTestRule<ClickPlayerActivity> mActivityRule = new ActivityTestRule(ClickPlayerActivity.class);
 
     @Test
     public void callbackIsCalled()  {
         FootballFieldLayout ffl = (FootballFieldLayout) mActivityRule.getActivity().findViewById(R.id.activity_field);
-        // http://stackoverflow.com/questions/27348625/java-unit-testing-the-easiest-way-to-test-if-a-callback-is-invoked
-        final FootballFieldLayout.OnPlayerActionsCallback callBack =
-                mock(FootballFieldLayout.OnPlayerActionsCallback.class);
+        final FootballFieldLayout.OnPlayerClickCallback callBack =
+                mock(FootballFieldLayout.OnPlayerClickCallback.class);
 
-        ffl.setOnPlayerActionsCallback(callBack);
+        ffl.setOnClickPlayerListener(callBack);
 
-        onView(withId(R.id.player_undefined)).perform(swipeRight());
+        onView(withId(R.id.player_undefined)).perform(click());
         //onView(withId(R.id.player_undefined)).perform(swipeDown());
 
-        verify(callBack, atLeast(4)).moving(any(FieldPlayerView.class), any(FieldPosition.class));
+        verify(callBack, atLeast(1)).click(any(FieldPlayerView.class));
 
     }
 }
