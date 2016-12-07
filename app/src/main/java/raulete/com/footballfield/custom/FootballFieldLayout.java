@@ -1,6 +1,7 @@
 package raulete.com.footballfield.custom;
 
 import android.content.Context;
+import android.os.Vibrator;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -66,6 +67,8 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
     public final static int PLAYER_MOVE_ON_ADDED = 200;
 
     public final static int NO_DELTA = -10000;
+
+    private boolean vibrationFeedback = true;
 
     private int MOVE_ON_ACTION = PLAYER_MOVE_ON_LONG_CLICK;
     private OnPlayerActionsCallback onPlayerActionsCallback = uselessOnPlayerCallback;
@@ -173,12 +176,18 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
                 view.setOnLongClickListener(new OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
+                        vibration();
                         v.setOnTouchListener(FootballFieldLayout.this);
                         return true;
                     }
                 });
                 break;
         }
+    }
+
+    private void vibration()
+    {
+        if(vibrationFeedback) ((Vibrator)getContext().getSystemService(Context.VIBRATOR_SERVICE)).vibrate(50);
     }
 
     /**
@@ -201,19 +210,24 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
     // http://stackoverflow.com/questions/9398057/android-move-a-view-on-touch-move-action-move
     public float dX = NO_DELTA, dY = NO_DELTA;
 
+    // TODO last good position when moving
+
     @Override
     public boolean onTouch(View view, MotionEvent event) {
+        FieldPlayerView fpv = (FieldPlayerView) view;
+        FieldPosition fposition = FieldPosition.createFromEvent(this, event);
+
         switch (event.getAction()) {
 
             case MotionEvent.ACTION_DOWN:
                 setDelta(view, event);
                 break;
             case MotionEvent.ACTION_MOVE:
-                move(view, event);
+                if(onPlayerActionsCallback.moving(fpv.getFieldPlayer(), fposition)) {
+                    move(view, event);
+                }
                 break;
             case MotionEvent.ACTION_UP:
-                FieldPlayerView fpv = (FieldPlayerView) view;
-                FieldPosition fposition = FieldPosition.createFromEvent(this, event);
                 onPlayerActionsCallback.moved(fpv.getFieldPlayer(), fposition);
                 view.setOnTouchListener(null);
                 activateOnTouchListener(view);
@@ -256,10 +270,16 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
     }
 
     public interface OnPlayerActionsCallback {
-        void moved(FieldPlayer fp, FieldPosition fieldPosition);
+        boolean moving(FieldPlayer fPlayer, FieldPosition fPosition);
+        void moved(FieldPlayer fPlayer, FieldPosition fPosition);
     }
 
     private final static OnPlayerActionsCallback uselessOnPlayerCallback = new OnPlayerActionsCallback() {
+        @Override
+        public boolean moving(FieldPlayer fPlayer, FieldPosition fPosition) {
+            return true;
+        }
+
         @Override
         public void moved(FieldPlayer fp, FieldPosition fieldPosition) {
 

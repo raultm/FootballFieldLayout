@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="raulete.com.footballfield.s002addplayer.AddPlayerActivity">
+
+    <raulete.com.footballfield.custom.FootballFieldLayout
+        android:id="@+id/activity_field"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentRight="true"
+        android:background="#66666666">
+        <!--<TextView
+            android:id="@+id/info_event"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Event : (-,-)"/>-->
+        <TextView
+            android:id="@+id/info_field_coords"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Field Coords : (-,-)"/>
+        <TextView
+            android:id="@+id/info_field_dimen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Field Dimen : (-,-)"/>
+        <TextView
+            android:id="@+id/info_position"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="View Pos(%) : (-,-)"/>
+        <TextView
+            android:id="@+id/current_position"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Current Position : (-,-)"/>
+    </LinearLayout>
+
+</RelativeLayout>

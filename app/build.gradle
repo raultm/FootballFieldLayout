@@ -27,4 +27,8 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.4.0'
     testCompile 'junit:junit:4.12'
     testCompile "org.mockito:mockito-core:1.+"
+    androidTestCompile "org.mockito:mockito-core:1.+"
+    // http://stackoverflow.com/questions/29290795/attempt-to-mockito-mock-any-class-generates-exceptionininitializererror
+    androidTestCompile 'com.google.dexmaker:dexmaker:1.2'
+    androidTestCompile 'com.google.dexmaker:dexmaker-mockito:1.2'
 }

@@ -1,10 +1,8 @@
-package raulete.com.footballfield.s005aftermovedcallback;
+package raulete.com.footballfield.s009movecallback;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import raulete.com.footballfield.BaseFieldPlayer;
 import raulete.com.footballfield.R;
@@ -12,7 +10,7 @@ import raulete.com.footballfield.custom.FieldPlayer;
 import raulete.com.footballfield.custom.FieldPosition;
 import raulete.com.footballfield.custom.FootballFieldLayout;
 
-public class AfterMovedPlayerCallbackActivity extends AppCompatActivity {
+public class MovingCallbackActivity extends AppCompatActivity {
 
     FootballFieldLayout footballFieldLayout;
 
@@ -20,7 +18,7 @@ public class AfterMovedPlayerCallbackActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_005_after_moved_player_callback);
+        setContentView(R.layout.activity_009_moving_player_callback);
 
         footballFieldLayout = (FootballFieldLayout) findViewById(R.id.activity_field);
 
@@ -29,11 +27,13 @@ public class AfterMovedPlayerCallbackActivity extends AppCompatActivity {
         final TextView fieldCoords = (TextView) findViewById(R.id.info_field_coords);
         final TextView fieldDimen = (TextView) findViewById(R.id.info_field_dimen);
         final TextView pointCoords = (TextView) findViewById(R.id.info_position);
+        final TextView currentPosition = (TextView) findViewById(R.id.current_position);
+
 
         footballFieldLayout.setOnPlayerActionsCallback(new FootballFieldLayout.OnPlayerActionsCallback() {
             @Override
             public boolean moving(FieldPlayer fPlayer, FieldPosition fPosition) {
-                if(fPosition.getX() > 50){ return false; }
+                currentPosition.setText(fPosition.getCoords());
                 return true;
             }
 

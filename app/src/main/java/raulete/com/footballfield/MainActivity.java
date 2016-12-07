@@ -13,6 +13,7 @@ import raulete.com.footballfield.s005aftermovedcallback.AfterMovedPlayerCallback
 import raulete.com.footballfield.s006exchangeplayer.ExchangePlayerActivity;
 import raulete.com.footballfield.s007playerteam.PlayerTeamActivity;
 import raulete.com.footballfield.s008teamcolor.TeamColorActivity;
+import raulete.com.footballfield.s009movecallback.MovingCallbackActivity;
 import raulete.com.footballfield.s012adplayercustomposition.CustomPositionActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -53,6 +54,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void openTeamColor(View view) {
         openActivity(TeamColorActivity.class);
+    }
+
+    public void openMovingCallback(View view) {
+        openActivity(MovingCallbackActivity.class);
     }
 
     public void openCustomPosition(View view) {

@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="raulete.com.footballfield">
 
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application
         android:allowBackup="true"
@@ -24,6 +25,7 @@
         <activity android:name=".s006exchangeplayer.ExchangePlayerActivity"></activity>
         <activity android:name=".s007playerteam.PlayerTeamActivity"></activity>
         <activity android:name=".s008teamcolor.TeamColorActivity"></activity>
+        <activity android:name=".s009movecallback.MovingCallbackActivity"></activity>
         <activity android:name=".s012adplayercustomposition.CustomPositionActivity"></activity>
     </application>
 
