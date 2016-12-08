@@ -251,7 +251,7 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
         return true;
     }
 
-    private FieldPosition rectifyPosition(FieldPlayerView fpv, FieldPosition fposition) {
+    public FieldPosition rectifyPosition(FieldPlayerView fpv, FieldPosition fposition) {
         float xMin = getXMin(fpv);
         float yMin = getYMin(fpv);
         float xMax = getXMax(fpv);
@@ -270,16 +270,21 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
 
     private float getYMax(FieldPlayerView fpv) {
         if(BOUNDARIES_TYPE == BOUNDARIES_NONE) {
-            return -1000000000;
+            return 1000000000;
         }
-        return getHeight() - fpv.getHeight();
+        // getMeasuredHEight because using rectifyPosition in fpv.onMeasure
+        int viewHeight = fpv.getHeight();
+        if(viewHeight == 0){ viewHeight = fpv.getMeasuredHeight(); }
+        return getHeight() - viewHeight;
     }
 
     private float getXMax(FieldPlayerView fpv) {
         if(BOUNDARIES_TYPE == BOUNDARIES_NONE) {
             return 1000000000;
         }
-        return getWidth() - fpv.getWidth();
+        int viewWidth = fpv.getWidth();
+        if(viewWidth == 0){ viewWidth = fpv.getMeasuredWidth(); }
+        return getWidth() - viewWidth;
     }
 
     private float getYMin(FieldPlayerView fpv) {
