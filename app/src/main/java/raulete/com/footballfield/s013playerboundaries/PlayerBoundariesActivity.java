@@ -14,7 +14,8 @@ public class PlayerBoundariesActivity extends AppCompatActivity {
 
     FootballFieldLayout footballFieldLayout;
 
-    private final FieldPlayer messi = BaseFieldPlayer.create("Messi", "10");
+    private final FieldPlayer messi = BaseFieldPlayer.messi();
+    private final FieldPlayer ronaldo = BaseFieldPlayer.ronaldo();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,14 +26,26 @@ public class PlayerBoundariesActivity extends AppCompatActivity {
         footballFieldLayout = (FootballFieldLayout) findViewById(R.id.activity_field);
 
         footballFieldLayout.setActionToActivateOnTouchListener(FootballFieldLayout.PLAYER_MOVE_ON_ADDED);
-
-        addPlayerPositionZeroZero();
-
     }
 
-    public void addPlayerPositionZeroZero() {
-        footballFieldLayout.addPlayerLocal(messi);
+    public void addLocalPlayer(View v){
+        footballFieldLayout.addPlayerLocal(ronaldo, FieldCoordinates.create(0,0));
     }
 
+    public void addGuestPlayer(View v){
+        footballFieldLayout.addPlayerLocal(messi, FieldCoordinates.create(100, 100));
+    }
+
+    public void setBoundariesNone(View v){
+        footballFieldLayout.setBoundaries(FootballFieldLayout.BOUNDARIES_NONE);
+    }
+
+    public void setBoundariesField(View v){
+        footballFieldLayout.setBoundaries(FootballFieldLayout.BOUNDARIES_FIELD);
+    }
+
+    public void setBoundariesHalfField(View v){
+        footballFieldLayout.setBoundaries(FootballFieldLayout.BOUNDARIES_HALF_FIELD);
+    }
 
 }

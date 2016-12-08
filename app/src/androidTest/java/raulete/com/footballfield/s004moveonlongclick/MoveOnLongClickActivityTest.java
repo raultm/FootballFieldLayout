@@ -62,8 +62,9 @@ public class MoveOnLongClickActivityTest {
         View view = mActivityRule.getActivity().findViewById(R.id.player_undefined);
 
         float[] beginCoord = {view.getX(), view.getY()};
-        onView(withId(R.id.player_undefined)).perform(longClick());
-        drag(InstrumentationRegistry.getInstrumentation().getUiAutomation(),0, 100, 0, 100, 20);
+        //onView(withId(R.id.player_undefined)).perform(longClick(), swipeRight());
+        //onView(withId(R.id.player_undefined)).perform(longClick());
+        //drag(InstrumentationRegistry.getInstrumentation().getUiAutomation(),0, 100, 0, 100, 20);
         float[] endCoord = {view.getX(), view.getY()};
 
         assertThat(beginCoord[0], not(equalTo(endCoord[0])));

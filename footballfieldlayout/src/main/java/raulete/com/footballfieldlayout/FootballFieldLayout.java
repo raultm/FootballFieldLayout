@@ -62,10 +62,15 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
     public final static int PLAYER_MOVE_ON_LONG_CLICK = 100;
     public final static int PLAYER_MOVE_ON_ADDED = 200;
 
+    public final static int BOUNDARIES_NONE = 100;
+    public final static int BOUNDARIES_FIELD = 200;
+    public final static int BOUNDARIES_HALF_FIELD = 300;
+
     private final static int NO_DELTA = -10000;
 
     private boolean vibrationFeedback = true;
 
+    private int BOUNDARIES_TYPE = BOUNDARIES_HALF_FIELD;
     private int MOVE_ON_ACTION = PLAYER_MOVE_ON_LONG_CLICK;
     private OnPlayerActionsCallback onPlayerActionsCallback = uselessOnPlayerCallback;
     private OnPlayerClickCallback onPlayerClickCallback = uselessOnPlayerClickCallback;
@@ -221,6 +226,9 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
         FieldPlayerView fpv = (FieldPlayerView) view;
         FieldPosition fposition = FieldPosition.createFromEvent(this, event);
 
+        //fposition = rectifyPosition(fpv, fposition);
+
+
         switch (event.getAction()) {
 
             case MotionEvent.ACTION_DOWN:
@@ -243,9 +251,54 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
         return true;
     }
 
+    private FieldPosition rectifyPosition(FieldPlayerView fpv, FieldPosition fposition) {
+        float xMin = getXMin(fpv);
+        float yMin = getYMin(fpv);
+        float xMax = getXMax(fpv);
+        float yMax = getYMax(fpv);
+        float x = fposition.getXinPx();
+        float y = fposition.getYinPx();
+
+        if(x < xMin){ x = xMin; }
+        if(y < yMin){ y = yMin; }
+
+        if(x > xMax){ x = xMax; }
+        if(y > yMax){ y = yMax; }
+
+        return FieldPosition.createFromRawXY(this, x, y);
+    }
+
+    private float getYMax(FieldPlayerView fpv) {
+        if(BOUNDARIES_TYPE == BOUNDARIES_NONE) {
+            return -1000000000;
+        }
+        return getHeight() - fpv.getHeight();
+    }
+
+    private float getXMax(FieldPlayerView fpv) {
+        if(BOUNDARIES_TYPE == BOUNDARIES_NONE) {
+            return 1000000000;
+        }
+        return getWidth() - fpv.getWidth();
+    }
+
+    private float getYMin(FieldPlayerView fpv) {
+        if(BOUNDARIES_TYPE == BOUNDARIES_NONE){
+            return -1000000000;
+        }
+        return 0;
+    }
+
+    private float getXMin(FieldPlayerView fpv) {
+        if(BOUNDARIES_TYPE == BOUNDARIES_NONE){
+            return -1000000000;
+        }
+        return 0;
+    }
+
     private void setDelta(FieldPlayerView view, MotionEvent event) {
-        dX = view.getXCenter() - event.getRawX();
-        dY = view.getYCenter() - event.getRawY();
+        dX = view.getX() - event.getRawX();
+        dY = view.getY() - event.getRawY();
     }
 
     private void resetDelta() {
@@ -264,12 +317,13 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
         move(view, x, y, 0);
     }
 
-    public void move(FieldPlayerView view, float x, float y, int duration){
-        x = view.handleXBoundariesForTopLeftCorner(x, 0, getWidth());
-        y = view.handleYBoundariesForTopLeftCorner(y, 0, getHeight());
-        view.animate()
-                .x(x)
-                .y(y)
+    public void move(FieldPlayerView fpv, float x, float y, int duration){
+        FieldPosition fposition = FieldPosition.createFromRawXY(this, x, y);
+        fposition = rectifyPosition(fpv, fposition);
+
+        fpv.animate()
+                .x(fposition.getXinPx())
+                .y(fposition.getYinPx())
                 .setDuration(duration)
                 .start();
     }
@@ -288,6 +342,10 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
 
     public void setOnClickPlayerListener(OnPlayerClickCallback cb) {
          onPlayerClickCallback = cb;
+    }
+
+    public void setBoundaries(int boundariesType) {
+        BOUNDARIES_TYPE = boundariesType;
     }
 
     public interface OnPlayerActionsCallback {

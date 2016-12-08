@@ -15,12 +15,17 @@ import raulete.com.footballfieldlayout.FieldPlayerView;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.swipeDown;
+import static android.support.test.espresso.action.ViewActions.swipeLeft;
+import static android.support.test.espresso.action.ViewActions.swipeUp;
 import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.assertThat;
+import static android.support.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.not;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
@@ -30,13 +35,134 @@ public class PlayerBoundariesActivityTest {
     public ActivityTestRule<PlayerBoundariesActivity> mActivityRule = new ActivityTestRule(PlayerBoundariesActivity.class);
 
     @Test
-    public void onAddButtonPlayerClickFieldPlayerAddedToLayout() {
+    public void onBoundariesNonePlayerLeaveTheFieldFromTheLeft() {
+        onView(withId(R.id.addLocalPlayer)).perform(click());
+        onView(withId(R.id.setBoundariesNone)).perform(click());
 
-        onView(withId(R.id.player_undefined)).check(matches(isDisplayed()));
+        onView(withId(R.id.player_undefined))
+                .perform(swipeLeft())
+                .check(matches(not(isCompletelyDisplayed())));
 
-        FieldPlayerView playerView = (FieldPlayerView) mActivityRule.getActivity().findViewById(R.id.player_undefined);
+    }
 
+    @Test
+    public void onBoundariesFieldPlayerCantLeaveTheFieldFromTheLeft() {
+        onView(withId(R.id.addLocalPlayer)).perform(click());
+        onView(withId(R.id.setBoundariesField)).perform(click());
 
+        onView(withId(R.id.player_undefined))
+                .perform(swipeLeft())
+                .check(matches(isCompletelyDisplayed()));
+
+    }
+
+    @Test
+    public void onBoundariesHalfFieldPlayerCantLeaveTheFieldFromTheLeft() {
+        onView(withId(R.id.addLocalPlayer)).perform(click());
+        onView(withId(R.id.setBoundariesHalfField)).perform(click());
+
+        onView(withId(R.id.player_undefined))
+                .perform(swipeLeft())
+                .check(matches(isCompletelyDisplayed()));
+
+    }
+
+    @Test
+    public void onBoundariesNonePlayerLeaveTheFieldFromTheTop() {
+        onView(withId(R.id.addLocalPlayer)).perform(click());
+        onView(withId(R.id.setBoundariesNone)).perform(click());
+
+        onView(withId(R.id.player_undefined))
+                .perform(swipeUp())
+                .check(matches(not(isCompletelyDisplayed())));
+
+    }
+
+    @Test
+    public void onBoundariesFieldPlayerCantLeaveTheFieldFromTheTop() {
+        onView(withId(R.id.addLocalPlayer)).perform(click());
+        onView(withId(R.id.setBoundariesField)).perform(click());
+
+        onView(withId(R.id.player_undefined))
+                .perform(swipeUp())
+                .check(matches(isCompletelyDisplayed()));
+
+    }
+
+    @Test
+    public void onBoundariesHalfFieldPlayerCantLeaveTheFieldFromTheTop() {
+        onView(withId(R.id.addLocalPlayer)).perform(click());
+        onView(withId(R.id.setBoundariesHalfField)).perform(click());
+
+        onView(withId(R.id.player_undefined))
+                .perform(swipeUp())
+                .check(matches(isCompletelyDisplayed()));
+
+    }
+
+    @Test
+    public void onBoundariesNonePlayerLeaveTheFieldFromTheBottom() {
+        onView(withId(R.id.addGuestPlayer)).perform(click());
+        onView(withId(R.id.setBoundariesNone)).perform(click());
+
+        onView(withId(R.id.player_undefined))
+                .perform(swipeDown())
+                .check(matches(not(isCompletelyDisplayed())));
+
+    }
+
+    @Test
+    public void onBoundariesFieldPlayerCantLeaveTheFieldFromTheBottom() {
+        onView(withId(R.id.addGuestPlayer)).perform(click());
+        onView(withId(R.id.setBoundariesField)).perform(click());
+
+        onView(withId(R.id.player_undefined))
+                .perform(swipeDown())
+                .check(matches(isCompletelyDisplayed()));
+
+    }
+
+    @Test
+    public void onBoundariesHalfFieldPlayerCantLeaveTheFieldFromTheBottom() {
+        onView(withId(R.id.addGuestPlayer)).perform(click());
+        onView(withId(R.id.setBoundariesHalfField)).perform(click());
+
+        onView(withId(R.id.player_undefined))
+                .perform(swipeDown())
+                .check(matches(isCompletelyDisplayed()));
+
+    }
+
+    @Test
+    public void onBoundariesNonePlayerLeaveTheFieldFromTheRight() {
+        onView(withId(R.id.addGuestPlayer)).perform(click());
+        onView(withId(R.id.setBoundariesNone)).perform(click());
+
+        onView(withId(R.id.player_undefined))
+                .perform(swipeDown())
+                .check(matches(not(isCompletelyDisplayed())));
+
+    }
+
+    @Test
+    public void onBoundariesFieldPlayerCantLeaveTheFieldFromTheRight() {
+        onView(withId(R.id.addGuestPlayer)).perform(click());
+        onView(withId(R.id.setBoundariesField)).perform(click());
+
+        onView(withId(R.id.player_undefined))
+                .perform(swipeDown())
+                .check(matches(isCompletelyDisplayed()));
+
+    }
+
+    @Test
+    public void onBoundariesHalfFieldPlayerCantLeaveTheFieldFromTheRight() {
+        onView(withId(R.id.addGuestPlayer)).perform(click());
+        onView(withId(R.id.setBoundariesHalfField)).perform(click());
+
+        onView(withId(R.id.player_undefined))
+                .perform(swipeDown())
+                .check(matches(isCompletelyDisplayed()));
 
     }
 }

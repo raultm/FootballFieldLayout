@@ -128,20 +128,17 @@ public class FieldPlayerView extends LinearLayout {
         params.topMargin = (int)handleYBoundaries(fposition.getYinPx(), 0, parent.getHeight());
     }
 
-    public float handleXBoundaries(float xPX){
-        return handleXBoundaries(xPX, 0, 100);
-    }
-
     public float handleXBoundaries(float xPX, int min, int max){
         float left = xPX - (width / 2);
         if(left < min){ left = 0; }
-        if(left + (width / 2) > max){ left = max - (width / 2); }
+        if(left + width > max){ left = max - width; }
         return left;
     }
 
     public float handleYBoundaries(float yPX, int min, int max){
         float top = yPX - (height / 2);
         if(top < 0){ top = 0; }
+        if(top + height > max){ top = max - height; }
         return top;
     }
 
@@ -160,22 +157,16 @@ public class FieldPlayerView extends LinearLayout {
     }
 
     public float[] getCoords() {
-        return new float[]{getXCenter(), getYCenter()};
+        return new float[]{getX() + getWidthDelta(), getY() + getHeightDelta()};
     }
 
-    public float getXCenter(){
-        return super.getX() + (width / 2);
+    public int getWidthDelta(){
+        return width / 2;
     }
 
-    public float getYCenter(){
-        return super.getY() + (height / 2);
+    public int getHeightDelta(){
+        return height / 2;
     }
 
-    public float handleYBoundariesForTopLeftCorner(float y, int i, int height) {
-        return handleYBoundaries(y, i, height) + (this.height/2);
-    }
 
-    public float handleXBoundariesForTopLeftCorner(float x, int i, int width) {
-        return handleXBoundaries(x, i, width) + (this.width/2);
-    }
 }

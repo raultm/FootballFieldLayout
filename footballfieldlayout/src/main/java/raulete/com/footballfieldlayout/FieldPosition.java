@@ -27,29 +27,20 @@ public class FieldPosition {
 
 
     public static FieldPosition createFromEvent(FootballFieldLayout footballFieldLayout, MotionEvent event) {
-
-        Rect rectf = new Rect();
-        footballFieldLayout.getLocalVisibleRect(rectf);
-        int[] coordinates = new int[2];
-        footballFieldLayout.getLocationOnScreen(coordinates);
-
-        // float positionX = (event.getRawX() - footballFieldLayout.getX()) * 100 / footballFieldLayout.getWidth();
-        float positionX = (event.getRawX() - coordinates[X]) * 100 / footballFieldLayout.getWidth();
-        //float positionY = (event.getRawY() - footballFieldLayout.getY()) * 100 / footballFieldLayout.getHeight();
-        float positionY = (event.getRawY() - coordinates[Y]) * 100 / footballFieldLayout.getHeight();
-
-        return new FieldPosition(footballFieldLayout, positionX, positionY);
+        return createFromRawXY(footballFieldLayout, event.getRawX(), event.getRawY());
     }
 
-//    public static FieldPosition createFromFieldPlayerView(FootballFieldLayout footballFieldLayout, FieldPlayerView playerView) {
-//        int[] fieldCoordinates = getCoordinates(footballFieldLayout);
-//        int[] playerCoordinates = getCoordinates(playerView);
-//
-//        float positionX = (playerCoordinates[X] - fieldCoordinates[X]) * 100 / footballFieldLayout.getWidth();
-//        float positionY = (playerCoordinates[Y] - fieldCoordinates[Y]) * 100 / footballFieldLayout.getHeight();
-//
-//        return new FieldPosition(footballFieldLayout, positionX, positionY);
-//    }
+    public static final FieldPosition createFromRawXY(FootballFieldLayout ffl, float x, float y) {
+        Rect rectf = new Rect();
+        ffl.getLocalVisibleRect(rectf);
+        int[] coordinates = new int[2];
+        ffl.getLocationOnScreen(coordinates);
+
+        float positionX = x * 100 / ffl.getWidth();
+        float positionY = y * 100 / ffl.getHeight();
+
+        return createFromXY(ffl, positionX, positionY);
+    }
 
     public static final FieldPosition createFromXY(FootballFieldLayout ffl, float x, float y) {
         return new FieldPosition(ffl, x, y);
@@ -99,21 +90,29 @@ public class FieldPosition {
         return "Field Coords: (" + fieldRawX + "," + fieldRawY + ")(" + fieldX + "," + fieldY + ")";
     }
 
-    public int getX() {
-        return (int) positionX;
+    public float getX() {
+        return positionX;
     }
 
-    public int getY() {
-        return (int) positionY;
+    public float getY() {
+        return positionY;
     }
 
     public float getXinPx(){
-        return (int)(getX() * fieldWidth / 100);
+        return getX() * fieldWidth / 100;
     }
 
     public float getYinPx(){
-        return (int)(getY() * fieldHeight / 100);
+        return getY() * fieldHeight / 100;
     }
 
+    public int getFieldRawX()
+    {
+        return (int) fieldRawX;
+    }
+    public int getFieldRawY()
+    {
+        return (int) fieldRawY;
+    }
 
 }
