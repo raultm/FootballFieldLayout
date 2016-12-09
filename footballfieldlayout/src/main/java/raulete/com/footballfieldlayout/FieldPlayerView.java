@@ -124,8 +124,8 @@ public class FieldPlayerView extends LinearLayout {
         fposition = parent.rectifyPosition(this, fposition);
 
         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) getLayoutParams();
-        params.leftMargin = (int) fposition.getXinPx();
-        params.topMargin = (int) fposition.getYinPx();
+        params.leftMargin = (int) fposition.getXinPx();// - (width/2);
+        params.topMargin = (int) fposition.getYinPx();// - (height/2);
     }
 
     public void setPlayer(FieldPlayer fieldPlayer) {

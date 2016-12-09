@@ -15,14 +15,28 @@
             android:layout_width="0dip"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="Local Player"
+            android:text="Local"
             android:onClick="addLocalPlayer"/>
+        <Button
+            android:id="@+id/addLocalPlayerMidfield"
+            android:layout_width="0dip"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Local Mid"
+            android:onClick="addLocalPlayerMidfield"/>
+        <Button
+            android:id="@+id/addGuestPlayerMidfield"
+            android:layout_width="0dip"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Guest Mid"
+            android:onClick="addGuestPlayerMidfield"/>
         <Button
             android:id="@+id/addGuestPlayer"
             android:layout_width="0dip"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="Guest Player"
+            android:text="Guest"
             android:onClick="addGuestPlayer"/>
     </LinearLayout>
     <LinearLayout

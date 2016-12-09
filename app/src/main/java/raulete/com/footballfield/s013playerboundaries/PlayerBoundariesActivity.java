@@ -32,20 +32,28 @@ public class PlayerBoundariesActivity extends AppCompatActivity {
         footballFieldLayout.addPlayerLocal(ronaldo, FieldCoordinates.create(0,0));
     }
 
-    public void addGuestPlayer(View v){
-        footballFieldLayout.addPlayerLocal(messi, FieldCoordinates.create(100, 100));
+    public void addLocalPlayerMidfield(View v){
+        footballFieldLayout.addPlayerLocal(ronaldo, FieldCoordinates.create(50,50));
     }
 
-    public void setBoundariesNone(View v){
-        footballFieldLayout.setBoundaries(FootballFieldLayout.BOUNDARIES_NONE);
+    public void addGuestPlayerMidfield(View v){
+        footballFieldLayout.addPlayerGuest(messi, FieldCoordinates.create(50,50));
+    }
+
+    public void addGuestPlayer(View v){
+        footballFieldLayout.addPlayerGuest(messi, FieldCoordinates.create(100, 100));
+    }
+
+    public void setBoundariesNone(View v) {
+        footballFieldLayout.setBoundariesNone();
     }
 
     public void setBoundariesField(View v){
-        footballFieldLayout.setBoundaries(FootballFieldLayout.BOUNDARIES_FIELD);
+        footballFieldLayout.setBoundariesField();
     }
 
     public void setBoundariesHalfField(View v){
-        footballFieldLayout.setBoundaries(FootballFieldLayout.BOUNDARIES_HALF_FIELD);
+        footballFieldLayout.setBoundariesHalfField();
     }
 
 }

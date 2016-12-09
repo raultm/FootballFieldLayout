@@ -17,6 +17,7 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.swipeDown;
 import static android.support.test.espresso.action.ViewActions.swipeLeft;
+import static android.support.test.espresso.action.ViewActions.swipeRight;
 import static android.support.test.espresso.action.ViewActions.swipeUp;
 import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -163,6 +164,38 @@ public class PlayerBoundariesActivityTest {
         onView(withId(R.id.player_undefined))
                 .perform(swipeDown())
                 .check(matches(isCompletelyDisplayed()));
+
+    }
+
+    @Test
+    public void onBoundariesHalfFieldLocalPlayerCantInvadeGuestHalfField() {
+        onView(withId(R.id.setBoundariesHalfField)).perform(click());
+        onView(withId(R.id.addLocalPlayerMidfield)).perform(click());
+
+        View view = mActivityRule.getActivity().findViewById(R.id.player_undefined);
+
+        float[] beginCoord = {view.getX(), view.getY()};
+        onView(withId(R.id.player_undefined)).perform(swipeRight());
+        float[] endCoord = {view.getX(), view.getY()};
+
+        assertThat(beginCoord[0], equalTo(endCoord[0]));
+        assertThat(beginCoord[1], equalTo(endCoord[1]));
+
+    }
+
+    @Test
+    public void onBoundariesHalfFieldGuestPlayerCantInvadeLocalHalfField() {
+        onView(withId(R.id.setBoundariesHalfField)).perform(click());
+        onView(withId(R.id.addGuestPlayerMidfield)).perform(click());
+
+        View view = mActivityRule.getActivity().findViewById(R.id.player_undefined);
+
+        float[] beginCoord = {view.getX(), view.getY()};
+        onView(withId(R.id.player_undefined)).perform(swipeLeft());
+        float[] endCoord = {view.getX(), view.getY()};
+
+        assertThat(beginCoord[0], equalTo(endCoord[0]));
+        assertThat(beginCoord[1], equalTo(endCoord[1]));
 
     }
 }
