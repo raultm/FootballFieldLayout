@@ -2,12 +2,16 @@ package raulete.com.footballfieldlayout;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import static raulete.com.footballfieldlayout.FFL.coords;
+import static raulete.com.footballfieldlayout.FFL.position;
 
 /**
  * Created by raulete on 16/11/16.
@@ -37,6 +41,18 @@ public class FieldPlayerView extends LinearLayout {
         super(context);
         this.fp = fieldPlayer;
         this.fc = fieldCoordinates;
+        init();
+    }
+
+    protected void invertCoords(){
+        Log.i("FCOORDS", "Pre :" + getCoords().toString());
+        fc = getCoords().invert();
+        Log.i("FCOORDS", "Post:" + fc.toString());
+        init();
+    }
+
+    protected void setCoords(FieldCoordinates fCoordinates){
+        fc = fCoordinates;
         init();
     }
 
@@ -120,12 +136,22 @@ public class FieldPlayerView extends LinearLayout {
         // http://stackoverflow.com/questions/13394181/inflated-children-of-custom-linearlayout-dont-show-when-overriding-onmeasure
         super.onMeasure(MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY));
 
+        Log.i("Coords", "Coords: " + fc);
         fposition = FieldPosition.createFromXY(parent, fc.x(), fc.y());
         fposition = parent.rectifyPosition(this, fposition);
 
-        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) getLayoutParams();
-        params.leftMargin = (int) fposition.getXinPx();// - (width/2);
-        params.topMargin = (int) fposition.getYinPx();// - (height/2);
+        //setX(fposition.getXinPx() + getWidthDelta());
+        setX(fposition.getXinPx());
+        //setY(fposition.getYinPx() + getHeightDelta());
+        setY(fposition.getYinPx());
+
+        //RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) getLayoutParams();
+        //params.leftMargin = (int) fposition.getXinPx();// - (width/2);
+        //params.topMargin = (int) fposition.getYinPx();// - (height/2);
+
+        //Log.i("Coords", "Coords FC  : " + fc);
+        //Log.i("Coords", "Coords gC(): " + getCoords());
+        //Log.i("Coords", "LEFT, TOP: " + params.leftMargin + ", " + params.topMargin);
     }
 
     public void setPlayer(FieldPlayer fieldPlayer) {
@@ -138,8 +164,12 @@ public class FieldPlayerView extends LinearLayout {
         return new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
     }
 
-    public float[] getCoords() {
-        return new float[]{getX() + getWidthDelta(), getY() + getHeightDelta()};
+    public FieldCoordinates getCoords() {
+        return position(getFootballFieldLayout(), getX() + getWidthDelta(), getY() + getHeightDelta()).getCoords();
+    }
+
+    private FootballFieldLayout getFootballFieldLayout(){
+        return (FootballFieldLayout) this.getParent();
     }
 
     public int getWidthDelta() {

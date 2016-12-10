@@ -30,4 +30,12 @@ public class FieldCoordinates {
         return (int)y;
     }
 
+    public FieldCoordinates invert() {
+        return create(100 - x, 100 - y);
+    }
+
+    @Override
+    public String toString(){
+        return "(" + x +", " + y + ")";
+    }
 }

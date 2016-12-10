@@ -4,6 +4,8 @@ import android.graphics.Rect;
 import android.view.MotionEvent;
 import android.view.View;
 
+import static raulete.com.footballfieldlayout.FFL.coords;
+
 /**
  * Created by raulete on 23/11/16.
  */
@@ -78,8 +80,8 @@ public class FieldPosition {
                 + "- %position: (" + positionX + "," + positionY + ")";
     }
 
-    public String getCoords() {
-        return "Relative Coords: (" + positionX + "," + positionY + ")";
+    public FieldCoordinates getCoords() {
+        return coords(positionX, positionY );
     }
 
     public String getFieldDimen() {
@@ -114,5 +116,6 @@ public class FieldPosition {
     {
         return (int) fieldRawY;
     }
+
 
 }

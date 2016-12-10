@@ -10,13 +10,17 @@ import raulete.com.footballfieldlayout.FieldTeam;
 
 public class BaseFieldPlayer implements FieldPlayer {
 
-    private static final BaseFieldTeam fcb = BaseFieldTeam.fcb();
-    private static final BaseFieldTeam rmd = BaseFieldTeam.rmd();
-    private static final BaseFieldTeam atm = BaseFieldTeam.atm();
+    public static final BaseFieldTeam fcb = BaseFieldTeam.fcb();
+    public static final BaseFieldTeam rmd = BaseFieldTeam.rmd();
+    public static final BaseFieldTeam atm = BaseFieldTeam.atm();
 
     private final String name;
     private final String number;
     private FieldTeam team;
+
+    public static BaseFieldPlayer player(String name, String number, BaseFieldTeam team){
+        return create(name, number, team);
+    }
 
     public final static BaseFieldPlayer messi(){
         return create("Messi", "10", fcb);

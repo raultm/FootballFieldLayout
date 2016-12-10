@@ -30,19 +30,28 @@ public class FieldBoundaries {
         }
 
         if(boundariesType == BOUNDARIES_HALF_FIELD){
-            if(ffl.isLocal(fpv)){
-                return new FieldBoundaries(
-                        0 + fpv.getWidthDelta(), 0 + fpv.getHeightDelta(),
-                        ffl.getWidth()/2 - fpv.getWidthDelta(), ffl.getHeight() - fpv.getHeightDelta());
+            if(ffl.isLeftSide(fpv)){
+                return halfFieldBoundariesLeftSide(ffl, fpv);
             }
-            if(ffl.isGuest(fpv)){
-                return new FieldBoundaries(
-                        ffl.getWidth()/2 + fpv.getWidthDelta(), 0 + fpv.getHeightDelta(),
-                        ffl.getWidth() - fpv.getWidthDelta(), ffl.getHeight() - fpv.getHeightDelta());
+            if(ffl.isRightSide(fpv)){
+                return halfFieldBoundariesRightSide(ffl, fpv);
             }
         }
         return new FieldBoundaries(0,0,0,0);
     }
+
+    private static FieldBoundaries halfFieldBoundariesLeftSide(FootballFieldLayout ffl, FieldPlayerView fpv){
+        return new FieldBoundaries(
+                0 + fpv.getWidthDelta(), 0 + fpv.getHeightDelta(),
+                ffl.getWidth()/2 - fpv.getWidthDelta(), ffl.getHeight() - fpv.getHeightDelta());
+    }
+
+    private static FieldBoundaries halfFieldBoundariesRightSide(FootballFieldLayout ffl, FieldPlayerView fpv){
+        return new FieldBoundaries(
+                ffl.getWidth()/2 + fpv.getWidthDelta(), 0 + fpv.getHeightDelta(),
+                ffl.getWidth() - fpv.getWidthDelta(), ffl.getHeight() - fpv.getHeightDelta());
+    }
+
 
     private FieldBoundaries(int xMin, int yMin, int xMax, int yMax) {
         this.xMin = xMin;

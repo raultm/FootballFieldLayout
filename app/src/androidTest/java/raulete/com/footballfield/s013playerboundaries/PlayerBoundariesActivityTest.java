@@ -11,6 +11,7 @@ import org.junit.runner.RunWith;
 
 import raulete.com.footballfield.R;
 import raulete.com.footballfield.s012adplayercustomposition.CustomPositionActivity;
+import raulete.com.footballfieldlayout.FieldCoordinates;
 import raulete.com.footballfieldlayout.FieldPlayerView;
 
 import static android.support.test.espresso.Espresso.onView;
@@ -172,14 +173,14 @@ public class PlayerBoundariesActivityTest {
         onView(withId(R.id.setBoundariesHalfField)).perform(click());
         onView(withId(R.id.addLocalPlayerMidfield)).perform(click());
 
-        View view = mActivityRule.getActivity().findViewById(R.id.player_undefined);
+        FieldPlayerView fpv = (FieldPlayerView)mActivityRule.getActivity().findViewById(R.id.player_undefined);
 
-        float[] beginCoord = {view.getX(), view.getY()};
+        FieldCoordinates beginCoord = fpv.getCoords();
         onView(withId(R.id.player_undefined)).perform(swipeRight());
-        float[] endCoord = {view.getX(), view.getY()};
+        FieldCoordinates endCoord = fpv.getCoords();
 
-        assertThat(beginCoord[0], equalTo(endCoord[0]));
-        assertThat(beginCoord[1], equalTo(endCoord[1]));
+        assertThat(beginCoord.x(), equalTo(endCoord.x()));
+        assertThat(beginCoord.y(), equalTo(endCoord.y()));
 
     }
 

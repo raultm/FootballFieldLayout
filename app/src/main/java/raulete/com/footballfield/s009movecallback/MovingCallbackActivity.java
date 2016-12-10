@@ -33,7 +33,7 @@ public class MovingCallbackActivity extends AppCompatActivity {
         footballFieldLayout.setOnPlayerActionsCallback(new FootballFieldLayout.OnPlayerActionsCallback() {
             @Override
             public boolean moving(FieldPlayerView fPlayer, FieldPosition fPosition) {
-                currentPosition.setText(fPosition.getCoords());
+                currentPosition.setText(fPosition.getCoords().toString());
                 return true;
             }
 
@@ -41,7 +41,7 @@ public class MovingCallbackActivity extends AppCompatActivity {
             public void moved(FieldPlayerView fp, FieldPosition fieldPosition) {
                fieldCoords.setText(fieldPosition.getFieldCoords());
                fieldDimen.setText(fieldPosition.getFieldDimen());
-               pointCoords.setText(fieldPosition.getCoords());
+               pointCoords.setText(fieldPosition.getCoords().toString());
             }
         });
 

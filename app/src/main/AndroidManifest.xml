@@ -30,6 +30,7 @@
         <activity android:name=".s011exchangesameteam.ExchangeSameTeamActivity"></activity>
         <activity android:name=".s012adplayercustomposition.CustomPositionActivity"></activity>
         <activity android:name=".s013playerboundaries.PlayerBoundariesActivity"></activity>
+        <activity android:name=".s014changefield.ChangeFieldActivity"></activity>
     </application>
 
 </manifest>

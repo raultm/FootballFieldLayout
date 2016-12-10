@@ -18,6 +18,7 @@ import raulete.com.footballfield.s010clickplayer.ClickPlayerActivity;
 import raulete.com.footballfield.s011exchangesameteam.ExchangeSameTeamActivity;
 import raulete.com.footballfield.s012adplayercustomposition.CustomPositionActivity;
 import raulete.com.footballfield.s013playerboundaries.PlayerBoundariesActivity;
+import raulete.com.footballfield.s014changefield.ChangeFieldActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -77,6 +78,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void openPlayerBoundaries(View view) {
         openActivity(PlayerBoundariesActivity.class);
+    }
+
+    public void openChangeField(View view) {
+        openActivity(ChangeFieldActivity.class);
     }
 
     private void openActivity(Class<?> cls){

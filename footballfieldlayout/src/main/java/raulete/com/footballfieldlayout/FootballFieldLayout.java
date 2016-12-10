@@ -47,7 +47,7 @@ import java.util.List;
  * The position of the player will be referenced to the middle of the PlayerViewItself. I don't know
  * of it's gonna give problems this decision, but I need to define this now before use different
  * approaches.
- *
+ * <p>
  * If I use this approach a lot of problems to positionate, but otherwise I'll have problems when
  * strugglign agains diferent screens. The width/hight of the view doesn't need to modify the position
  * of the player over the field.
@@ -81,6 +81,31 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
 
     private FieldPlayerCollection fpc = new FieldPlayerCollection();
 
+    private final static int LOCAL_TEAM = 1;
+    private final static int GUEST_TEAM = 2;
+
+    private FieldTeam localTeam;
+    private FieldTeam guestTeam;
+
+    private int leftSideTeam = LOCAL_TEAM;
+
+    // http://stackoverflow.com/questions/9398057/android-move-a-view-on-touch-move-action-move
+    public float dX = NO_DELTA, dY = NO_DELTA;
+
+    public void changeField() {
+        if (leftSideTeam == LOCAL_TEAM) {
+            leftSideTeam = GUEST_TEAM;
+        } else {
+            leftSideTeam = LOCAL_TEAM;
+        }
+
+        fpc.invertPositions();
+    }
+
+    /*
+     * Constructors
+     */
+
     public FootballFieldLayout(Context context) {
         super(context);
     }
@@ -94,12 +119,9 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
         setBackgroundResource(R.mipmap.football_field);
     }
 
-    private final static int LOCAL_TEAM = 1;
-    private final static int GUEST_TEAM = 2;
-
-    private FieldTeam localTeam;
-    private FieldTeam guestTeam;
-
+    /*
+     * Add Players
+     */
     public void addPlayerLocal(FieldPlayer player) {
         addPlayer(LOCAL_TEAM, player);
     }
@@ -120,7 +142,7 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
         addPlayer(teamType, player, null);
     }
 
-    private void addPlayer(int teamType, FieldPlayer player, FieldCoordinates fieldCoordinates) throws IllegalArgumentException{
+    private void addPlayer(int teamType, FieldPlayer player, FieldCoordinates fieldCoordinates) throws IllegalArgumentException {
         // TODO Refactoring duplicate behaviout on teamType
         if (teamType == LOCAL_TEAM) {
             if (localTeam == null) {
@@ -130,7 +152,7 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
             } else {
 
             }
-            if(fieldCoordinates == null){
+            if (fieldCoordinates == null) {
                 fieldCoordinates = FieldCoordinates.create();
             }
         }
@@ -143,7 +165,7 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
             } else {
 
             }
-            if(fieldCoordinates == null){
+            if (fieldCoordinates == null) {
                 fieldCoordinates = FieldCoordinates.create();
             }
         }
@@ -195,9 +217,9 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
         }
     }
 
-    private void vibration()
-    {
-        if(vibrationFeedback) ((Vibrator)getContext().getSystemService(Context.VIBRATOR_SERVICE)).vibrate(50);
+    private void vibration() {
+        if (vibrationFeedback)
+            ((Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE)).vibrate(50);
     }
 
     /**
@@ -217,18 +239,10 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
         super.onLayout(changed, left, top, right, bottom);
     }
 
-    // http://stackoverflow.com/questions/9398057/android-move-a-view-on-touch-move-action-move
-    public float dX = NO_DELTA, dY = NO_DELTA;
-
-    // TODO last good position when moving
-
     @Override
     public boolean onTouch(View view, MotionEvent event) {
         FieldPlayerView fpv = (FieldPlayerView) view;
         FieldPosition fposition = FieldPosition.createFromEvent(this, event);
-
-        //fposition = rectifyPosition(fpv, fposition);
-
 
         switch (event.getAction()) {
 
@@ -236,12 +250,13 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
                 setDelta(fpv, event);
                 break;
             case MotionEvent.ACTION_MOVE:
-                if(onPlayerActionsCallback.moving(fpv, fposition)) {
+                if (onPlayerActionsCallback.moving(fpv, fposition)) {
                     move(fpv, event);
                 }
                 break;
             case MotionEvent.ACTION_UP:
                 onPlayerActionsCallback.moved(fpv, fposition);
+                fpv.setCoords(fpv.getCoords());
                 view.setOnTouchListener(null);
                 activateOnTouchListener(view);
                 resetDelta();
@@ -259,18 +274,26 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
 
         FieldBoundaries fb = FieldBoundaries.getBoundaries(BOUNDARIES_TYPE, this, fpv);
 
-        if(x < fb.getxMin()){ x = fb.getxMin();}
-        if(y < fb.getyMin()){ y = fb.getyMin();}
+        if (x < fb.getxMin()) {
+            x = fb.getxMin();
+        }
+        if (y < fb.getyMin()) {
+            y = fb.getyMin();
+        }
 
-        if(x > fb.getxMax()){ x = fb.getxMax();}
-        if(y > fb.getyMax()){ y = fb.getyMax();}
+        if (x > fb.getxMax()) {
+            x = fb.getxMax();
+        }
+        if (y > fb.getyMax()) {
+            y = fb.getyMax();
+        }
 
         return FieldPosition.createFromRawXY(this, x - fpv.getWidthDelta(), y - fpv.getHeightDelta());
     }
 
     private void setDelta(FieldPlayerView fpv, MotionEvent event) {
         dX = fpv.getX() + fpv.getWidthDelta() - event.getRawX();
-        dY = fpv.getY() + fpv.getHeightDelta()- event.getRawY();
+        dY = fpv.getY() + fpv.getHeightDelta() - event.getRawY();
     }
 
     private void resetDelta() {
@@ -285,19 +308,22 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
         move(view, event.getRawX() + dX, event.getRawY() + dY);
     }
 
-    public void move(FieldPlayerView view, float x, float y){
+    public void move(FieldPlayerView view, float x, float y) {
         move(view, x, y, 0);
     }
 
-    public void move(FieldPlayerView fpv, float x, float y, int duration){
+    public void move(FieldPlayerView fpv, float x, float y, int duration) {
         FieldPosition fposition = FieldPosition.createFromRawXY(this, x, y);
         fposition = rectifyPosition(fpv, fposition);
 
+        //fpv.setCoords(fposition.getCoords());
+        // http://stackoverflow.com/questions/30859572/how-to-reset-view-to-original-state-after-using-animators-to-animates-its-some-p
         fpv.animate()
                 .x(fposition.getXinPx())
                 .y(fposition.getYinPx())
                 .setDuration(duration)
                 .start();
+
     }
 
 
@@ -306,14 +332,14 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
     }
 
     public void exchange(FieldPlayer playerFromFieldToBench, FieldPlayer playerFromBenchToField) {
-        if(!playerFromBenchToField.getTeam().equals(playerFromFieldToBench.getTeam())){
+        if (!playerFromBenchToField.getTeam().equals(playerFromFieldToBench.getTeam())) {
             throw new IllegalArgumentException();
         }
         fpc.exchange(playerFromFieldToBench, playerFromBenchToField);
     }
 
     public void setOnClickPlayerListener(OnPlayerClickCallback cb) {
-         onPlayerClickCallback = cb;
+        onPlayerClickCallback = cb;
     }
 
     public void setBoundariesNone() {
@@ -336,8 +362,22 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
         return fpv.getFieldPlayer().getTeam().equals(guestTeam);
     }
 
+    public boolean isLeftSide(FieldPlayerView fpv) {
+        if(fpv.getFieldPlayer().getTeam().equals(localTeam) && leftSideTeam == LOCAL_TEAM){ return true; }
+        if(fpv.getFieldPlayer().getTeam().equals(guestTeam) && leftSideTeam == GUEST_TEAM){ return true; }
+        return false;
+    }
+
+    public boolean isRightSide(FieldPlayerView fpv) {
+        if(fpv.getFieldPlayer().getTeam().equals(localTeam) && leftSideTeam != LOCAL_TEAM){ return true; }
+        if(fpv.getFieldPlayer().getTeam().equals(guestTeam) && leftSideTeam != GUEST_TEAM){ return true; }
+        return false;
+    }
+
+
     public interface OnPlayerActionsCallback {
         boolean moving(FieldPlayerView fPlayer, FieldPosition fPosition);
+
         void moved(FieldPlayerView fPlayer, FieldPosition fPosition);
     }
 

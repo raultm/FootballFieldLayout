@@ -39,7 +39,7 @@ public class AfterMovedPlayerCallbackActivity extends AppCompatActivity {
             public void moved(FieldPlayerView fp, FieldPosition fieldPosition) {
                fieldCoords.setText(fieldPosition.getFieldCoords());
                fieldDimen.setText(fieldPosition.getFieldDimen());
-               pointCoords.setText(fieldPosition.getCoords());
+               pointCoords.setText(fieldPosition.getCoords().toString());
             }
         });
 

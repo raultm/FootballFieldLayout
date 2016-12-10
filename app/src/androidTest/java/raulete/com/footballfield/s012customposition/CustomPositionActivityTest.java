@@ -11,6 +11,7 @@ import org.junit.runner.RunWith;
 
 import raulete.com.footballfield.R;
 import raulete.com.footballfield.s012adplayercustomposition.CustomPositionActivity;
+import raulete.com.footballfieldlayout.FieldCoordinates;
 import raulete.com.footballfieldlayout.FieldPlayerView;
 
 import static android.support.test.espresso.Espresso.onView;
@@ -40,10 +41,10 @@ public class CustomPositionActivityTest {
         FieldPlayerView playerView = (FieldPlayerView) mActivityRule.getActivity().findViewById(R.id.player_undefined);
 
 
-        float[] coord = playerView.getCoords();
+        FieldCoordinates coord = playerView.getCoords();
 
-        assertThat(coord[0] / field.getWidth() * 100, equalTo(50f));
-        assertThat(coord[1] / field.getHeight() * 100, equalTo(50f));
+        assertThat(coord.x, equalTo(50f));
+        assertThat(coord.y, equalTo(50f));
 
     }
 }

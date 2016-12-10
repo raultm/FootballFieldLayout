@@ -37,14 +37,21 @@ public class FieldPlayerCollection {
         return map(view.getFieldPlayer(), view);
     }
 
-    public FieldPlayerView getView(FieldPlayer player) {
-        return mapViews.get(player);
-    }
-
     public void exchange(FieldPlayer playerFromFieldToBench, FieldPlayer playerFromBenchToField) {
         FieldPlayerView fpv = mapViews.get(playerFromFieldToBench);
+        FieldCoordinates fc = fpv.getCoords();
         fpv.setPlayer(playerFromBenchToField);
         add(fpv);
+        fpv.setCoords(fc);
+
         mapViews.remove(playerFromFieldToBench);
+    }
+
+    public void invertPositions() {
+        for(Map.Entry<FieldPlayer, FieldPlayerView> entry : mapViews.entrySet()) {
+            FieldPlayer fp = entry.getKey();
+            FieldPlayerView fpv = entry.getValue();
+            fpv.invertCoords();
+        }
     }
 }
