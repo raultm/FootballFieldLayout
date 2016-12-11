@@ -19,6 +19,7 @@ import raulete.com.footballfield.s011exchangesameteam.ExchangeSameTeamActivity;
 import raulete.com.footballfield.s012adplayercustomposition.CustomPositionActivity;
 import raulete.com.footballfield.s013playerboundaries.PlayerBoundariesActivity;
 import raulete.com.footballfield.s014changefield.ChangeFieldActivity;
+import raulete.com.footballfield.s015teamimage.TeamImageActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -82,6 +83,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void openChangeField(View view) {
         openActivity(ChangeFieldActivity.class);
+    }
+
+    public void openTeamImage(View view) {
+        openActivity(TeamImageActivity.class);
     }
 
     private void openActivity(Class<?> cls){

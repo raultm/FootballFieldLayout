@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
+import raulete.com.footballfield.BaseFieldImageLoader;
 import raulete.com.footballfield.BaseFieldPlayer;
 import raulete.com.footballfield.R;
 import raulete.com.footballfieldlayout.FieldCoordinates;
@@ -34,6 +35,8 @@ public class ChangeFieldActivity extends AppCompatActivity {
         footballFieldLayout.setActionToActivateOnTouchListener(FootballFieldLayout.PLAYER_MOVE_ON_ADDED);
 
         footballFieldLayout.setBoundariesHalfField();
+
+        footballFieldLayout.setImageLoader(new BaseFieldImageLoader());
     }
 
     public void changeField(View view){

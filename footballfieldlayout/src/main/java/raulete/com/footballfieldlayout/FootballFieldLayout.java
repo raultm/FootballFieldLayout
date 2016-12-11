@@ -1,16 +1,20 @@
 package raulete.com.footballfieldlayout;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Vibrator;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.RemoteViews;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static raulete.com.footballfieldlayout.FFL.coords;
 
 /**
  * Example of writing a custom layout manager.  This is a fairly full-featured
@@ -92,6 +96,8 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
     // http://stackoverflow.com/questions/9398057/android-move-a-view-on-touch-move-action-move
     public float dX = NO_DELTA, dY = NO_DELTA;
 
+    private FieldImageLoader imageLoader = uselessFieldImageLoader;
+
     public void changeField() {
         if (leftSideTeam == LOCAL_TEAM) {
             leftSideTeam = GUEST_TEAM;
@@ -100,6 +106,14 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
         }
 
         fpc.invertPositions();
+
+        FieldTeamView lftv = (FieldTeamView) findViewById(R.id.field_left_team_shield);
+        FieldTeamView rftv = (FieldTeamView) findViewById(R.id.field_right_team_shield);
+
+        Drawable temp = lftv.getDrawable();
+        lftv.setImageDrawable(rftv.getDrawable());
+        rftv.setImageDrawable(temp);
+
     }
 
     /*
@@ -117,6 +131,8 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
     public FootballFieldLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         setBackgroundResource(R.mipmap.football_field);
+        addView(new FieldTeamView(getContext(), R.id.field_left_team_shield, coords(25f, 50f)));
+        addView(new FieldTeamView(getContext(), R.id.field_right_team_shield, coords(25f, 50f).invert()));
     }
 
     /*
@@ -175,11 +191,15 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
     }
 
     public void addPlayerView(final FieldPlayerView fpv) {
-        if (teams.size() == 0) {
-            FieldTeamView ftv = new FieldTeamView(this.getContext(), R.id.field_left_team_shield, fpv.getFieldPlayer().getTeam(), FieldCoordinates.create(25f, 50f));
-            teams.add(ftv);
-            addView(ftv, 0);
+        int side = R.id.field_left_team_shield;
+        if(isRightSide(fpv)){
+            side = R.id.field_right_team_shield;
         }
+        FieldTeamView fieldTeamView = (FieldTeamView) findViewById(side);
+        if(fieldTeamView.getDrawable() == null){
+            imageLoader.load(fieldTeamView, fpv.getFieldPlayer().getTeam().getShortName());
+        }
+
         fpc.add(fpv);
         addView(fpv);
         activateOnTouchListener(fpv);
@@ -374,6 +394,10 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
         return false;
     }
 
+    public void setImageLoader(FieldImageLoader imageLoader) {
+        this.imageLoader = imageLoader;
+    }
+
 
     public interface OnPlayerActionsCallback {
         boolean moving(FieldPlayerView fPlayer, FieldPosition fPosition);
@@ -401,6 +425,13 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
 
         @Override
         public void click(FieldPlayerView fPlayer) {
+
+        }
+    };
+
+    private final static FieldImageLoader uselessFieldImageLoader = new FieldImageLoader() {
+        @Override
+        public void load(FieldTeamView fieldTeamView, String url) {
 
         }
     };

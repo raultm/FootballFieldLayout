@@ -19,19 +19,19 @@ public class BaseFieldTeam implements FieldTeam {
 
 
     public final static BaseFieldTeam eud(){
-        return create("Extremadura UD", "EUD", "http://i.imgur.com/1ksNsIk.png", "#3333FF");
+        return create("Extremadura UD", "EUD", "http://i.imgur.com/1ksNsIk.png", "#883333FF");
     }
 
     public final static BaseFieldTeam fcb(){
-        return create("FC Barcelona", "FCB", "", "#3333FF");
+        return create("FC Barcelona", "FCB", "", "#883333FF");
     }
 
     public final static BaseFieldTeam rmd(){
-        return create("Real Madrid", "RMD", "", "#FFFFFF");
+        return create("Real Madrid", "RMD", "", "#88FFFFFF");
     }
 
     public final static BaseFieldTeam atm(){
-        return create("Atlético de Madrid", "ATM", "", "#FF3333");
+        return create("Atlético de Madrid", "ATM", "", "#88FF3333");
     }
 
 

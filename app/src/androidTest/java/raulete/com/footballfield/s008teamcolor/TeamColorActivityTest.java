@@ -33,7 +33,7 @@ public class TeamColorActivityTest {
 
         onView(withText("Messi")).check(matches(isDisplayed()));
 
-        onView(withId(R.id.player_undefined)).check(matches(withBackgroundColor(Color.parseColor("#3333FF"))));
+        onView(withId(R.id.player_undefined)).check(matches(withBackgroundColor(Color.parseColor("#883333FF"))));
 
     }
 
@@ -44,7 +44,7 @@ public class TeamColorActivityTest {
 
         onView(withText("Ronaldo")).check(matches(isDisplayed()));
 
-        onView(withId(R.id.player_undefined)).check(matches(withBackgroundColor(Color.parseColor("#FFFFFF"))));
+        onView(withId(R.id.player_undefined)).check(matches(withBackgroundColor(Color.parseColor("#88FFFFFF"))));
 
     }
 

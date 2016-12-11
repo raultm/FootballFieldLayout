@@ -14,8 +14,12 @@ public class BaseFieldImageLoader implements FieldImageLoader {
 
     @Override
     public void load(FieldTeamView fieldTeamView, String url) {
-        if(fieldTeamView.getFieldTeam().getShortName().equals("EUD")){
+        if(url.equals("EUD")){
             fieldTeamView.setImageResource(R.mipmap.eud);
+        }else if(url.equals("FCB")){
+            fieldTeamView.setImageResource(R.mipmap.fcb);
+        }else if(url.equals("RMD")){
+            fieldTeamView.setImageResource(R.mipmap.rmd);
         }else{
             fieldTeamView.setBackgroundColor(Color.parseColor("#66666666"));
         }

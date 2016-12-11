@@ -11,7 +11,6 @@ import android.widget.RelativeLayout;
 
 public class FieldTeamView extends ImageView {
 
-    private FieldTeam ft;
     private FieldCoordinates fc;
     private FieldPosition fposition;
 
@@ -19,20 +18,16 @@ public class FieldTeamView extends ImageView {
     private int width;
     private int height;
 
-    public FieldTeamView(Context context, int resId, FieldTeam fieldTeam) {
-        this(context, resId, fieldTeam, FieldCoordinates.create(0,0));
+    public FieldTeamView(Context context, int resId) {
+        this(context, resId, FieldCoordinates.create(0,0));
 
     }
 
-    public FieldTeamView(Context context, int resId, FieldTeam fieldTeam, FieldCoordinates fieldCoordinates) {
+    public FieldTeamView(Context context, int resId, FieldCoordinates fieldCoordinates) {
         super(context);
-        this.ft = fieldTeam;
         this.fc = fieldCoordinates;
+        setAlpha(0.4f);
         setId(resId);
-    }
-
-    public FieldTeam getFieldTeam() {
-        return ft;
     }
 
     /**

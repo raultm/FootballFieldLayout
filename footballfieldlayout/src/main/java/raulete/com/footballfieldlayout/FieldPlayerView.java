@@ -45,9 +45,7 @@ public class FieldPlayerView extends LinearLayout {
     }
 
     protected void invertCoords(){
-        Log.i("FCOORDS", "Pre :" + getCoords().toString());
         fc = getCoords().invert();
-        Log.i("FCOORDS", "Post:" + fc.toString());
         init();
     }
 
