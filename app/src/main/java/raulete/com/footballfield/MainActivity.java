@@ -20,6 +20,7 @@ import raulete.com.footballfield.s012adplayercustomposition.CustomPositionActivi
 import raulete.com.footballfield.s013playerboundaries.PlayerBoundariesActivity;
 import raulete.com.footballfield.s014changefield.ChangeFieldActivity;
 import raulete.com.footballfield.s015teamimage.TeamImageActivity;
+import raulete.com.footballfield.s016wholeteam.WholeTeamActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -87,6 +88,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void openTeamImage(View view) {
         openActivity(TeamImageActivity.class);
+    }
+
+    public void openWholeTeam(View view){
+        openActivity(WholeTeamActivity.class);
     }
 
     private void openActivity(Class<?> cls){

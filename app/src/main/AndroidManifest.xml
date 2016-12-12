@@ -32,6 +32,7 @@
         <activity android:name=".s013playerboundaries.PlayerBoundariesActivity"></activity>
         <activity android:name=".s014changefield.ChangeFieldActivity"></activity>
         <activity android:name=".s015teamimage.TeamImageActivity"></activity>
+        <activity android:name=".s016wholeteam.WholeTeamActivity"></activity>
     </application>
 
 </manifest>

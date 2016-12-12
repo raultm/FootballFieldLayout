@@ -18,6 +18,8 @@ public class BaseFieldImageLoader implements FieldImageLoader {
             fieldTeamView.setImageResource(R.mipmap.eud);
         }else if(url.equals("FCB")){
             fieldTeamView.setImageResource(R.mipmap.fcb);
+        }else if(url.equals("SAM")){
+            fieldTeamView.setImageResource(R.mipmap.sam);
         }else if(url.equals("RMD")){
             fieldTeamView.setImageResource(R.mipmap.rmd);
         }else{

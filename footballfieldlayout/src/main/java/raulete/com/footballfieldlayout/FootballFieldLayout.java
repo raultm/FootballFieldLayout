@@ -398,6 +398,59 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
         this.imageLoader = imageLoader;
     }
 
+    // VARARGS
+    public void addLocal(FieldPlayer... players) {
+        FieldCoordinates[] coordinates = getCoordinates(players);
+
+        for(int i = 0; i < players.length; i++){
+            addPlayerLocal(players[i], coordinates[i]);
+        }
+    }
+
+    public void addGuest(FieldPlayer... players) {
+        FieldCoordinates[] coordinates = getCoordinates(players);
+
+        for(int i = 0; i < players.length; i++){
+            addPlayerGuest(players[i], coordinates[i].invert());
+            //addPlayerGuest(players[i]);
+        }
+    }
+
+    // TODO Basic implementation
+    private FieldCoordinates[] getCoordinates(FieldPlayer[] players){
+        FieldCoordinates[] coordinates = new FieldCoordinates[players.length];
+
+        int g = 0; // goalkeepers
+        int d = 0; // defenses
+        int m = 0; // midfielders
+        int f = 0; // forwards
+
+        for(int i = 0; i < players.length; i++){
+            if(players[i].isGoalkeeper())   { g++; coordinates[i] = coords( 5,  0);}
+            if(players[i].isDefense())      { d++; coordinates[i] = coords(17,  0);}
+            if(players[i].isMidfielder())   { m++; coordinates[i] = coords(30,  0);}
+            if(players[i].isForward())      { f++; coordinates[i] = coords(42,  0);}
+        }
+
+        int dg = 100 / (g+1); // delta goalkeeper
+        int dd = 100 / (d+1); // delta defenses
+        int dm = 100 / (m+1); // delta midfielders
+        int df = 100 / (f+1); // delta forwards
+
+        int lg = 0; // last goalkeeper
+        int ld = 0; // last defenses
+        int lm = 0; // last midfielders
+        int lf = 0; // last forwards
+
+        for(int i = 0; i < players.length; i++){
+            if(players[i].isGoalkeeper())   { coordinates[i] = coords( 5,  lg + dg); lg+=dg; }
+            if(players[i].isDefense())      { coordinates[i] = coords(17,  ld + dd); ld+=dd; }
+            if(players[i].isMidfielder())   { coordinates[i] = coords(30,  lm + dm); lm+=dm; }
+            if(players[i].isForward())      { coordinates[i] = coords(42,  lf + df); lf+=df; }
+        }
+
+        return coordinates;
+    }
 
     public interface OnPlayerActionsCallback {
         boolean moving(FieldPlayerView fPlayer, FieldPosition fPosition);

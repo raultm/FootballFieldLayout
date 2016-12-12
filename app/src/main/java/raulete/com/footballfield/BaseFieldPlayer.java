@@ -10,16 +10,29 @@ import raulete.com.footballfieldlayout.FieldTeam;
 
 public class BaseFieldPlayer implements FieldPlayer {
 
+    public static final BaseFieldTeam eud = BaseFieldTeam.eud();
+    public static final BaseFieldTeam sam = BaseFieldTeam.sam();
     public static final BaseFieldTeam fcb = BaseFieldTeam.fcb();
     public static final BaseFieldTeam rmd = BaseFieldTeam.rmd();
     public static final BaseFieldTeam atm = BaseFieldTeam.atm();
+
+    public static final String GOALKEEPER = "G";
+    public static final String DEFENSE = "D";
+    public static final String MIDFIELDER = "M";
+    public static final String FORWARD = "F";
 
     private final String name;
     private final String number;
     private FieldTeam team;
 
+    private String position = "";
+
+    public static BaseFieldPlayer player(String name, String number, BaseFieldTeam team, String position){
+        return create(name, number, team, position);
+    }
+
     public static BaseFieldPlayer player(String name, String number, BaseFieldTeam team){
-        return create(name, number, team);
+        return player(name, number, team, "");
     }
 
     public final static BaseFieldPlayer messi(){
@@ -44,13 +57,18 @@ public class BaseFieldPlayer implements FieldPlayer {
     }
 
     public final static BaseFieldPlayer create(String name, String number, FieldTeam team){
-        return new BaseFieldPlayer(name, number, team);
+        return create(name, number, team, "");
     }
 
-    private BaseFieldPlayer(String name, String number, FieldTeam team) {
+    public final static BaseFieldPlayer create(String name, String number, FieldTeam team, String position){
+        return new BaseFieldPlayer(name, number, team, position);
+    }
+
+    private BaseFieldPlayer(String name, String number, FieldTeam team, String position) {
         this.name = name;
         this.number = number;
         this.team = team;
+        this.position = position;
     }
 
     @Override
@@ -71,5 +89,25 @@ public class BaseFieldPlayer implements FieldPlayer {
     @Override
     public FieldTeam getTeam() {
         return team;
+    }
+
+    @Override
+    public boolean isGoalkeeper() {
+        return position.equals(GOALKEEPER);
+    }
+
+    @Override
+    public boolean isDefense() {
+        return position.equals(DEFENSE);
+    }
+
+    @Override
+    public boolean isMidfielder() {
+        return position.equals(MIDFIELDER);
+    }
+
+    @Override
+    public boolean isForward() {
+        return position.equals(FORWARD);
     }
 }

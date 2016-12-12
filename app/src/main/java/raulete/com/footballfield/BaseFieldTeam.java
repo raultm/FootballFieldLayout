@@ -18,6 +18,11 @@ public class BaseFieldTeam implements FieldTeam {
     private final int bgColor;
 
 
+    public final static BaseFieldTeam sam(){
+        return create("C.P. San Miguel", "SAM", "http://i.imgur.com/1ksNsIk.png", "#88CCCCCC");
+    }
+
+
     public final static BaseFieldTeam eud(){
         return create("Extremadura UD", "EUD", "http://i.imgur.com/1ksNsIk.png", "#883333FF");
     }

@@ -11,4 +11,12 @@ public interface FieldPlayer {
     String getShortName();
 
     FieldTeam getTeam();
+
+    boolean isGoalkeeper();
+
+    boolean isDefense();
+
+    boolean isMidfielder();
+
+    boolean isForward();
 }
