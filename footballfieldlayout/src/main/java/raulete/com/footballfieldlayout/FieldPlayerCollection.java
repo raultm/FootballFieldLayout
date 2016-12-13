@@ -9,32 +9,18 @@ import java.util.Map;
  */
 public class FieldPlayerCollection {
 
-    ArrayList<FieldPlayer> list = new ArrayList<>();
-
-    Map<FieldPlayer, FieldPlayerView> mapViews = new HashMap<FieldPlayer, FieldPlayerView>();
-
-    public boolean add(FieldPlayer player) {
-        return list.add(player);
-    }
+    private Map<FieldPlayer, FieldPlayerView> mapViews = new HashMap<FieldPlayer, FieldPlayerView>();
 
     public boolean add(FieldPlayerView playerView) {
-        return list.add(playerView.getFieldPlayer()) && map(playerView);
+        return map(playerView);
     }
 
-    public FieldPlayer first() {
-        if(list.size() > 0)
-        {
-            return list.get(0);
+    public FieldPlayerView remove(FieldPlayer player){
+        FieldPlayerView fpv = mapViews.remove(player);
+        if(fpv != null && fpv.getParent() != null){
+            fpv.getFootballFieldLayout().removeView(fpv);
         }
-        return null;
-    }
-
-    public boolean map(FieldPlayer player, FieldPlayerView view){
-        return mapViews.put(player, view) == view;
-    }
-
-    public boolean map(FieldPlayerView view){
-        return map(view.getFieldPlayer(), view);
+        return fpv;
     }
 
     public void exchange(FieldPlayer playerFromFieldToBench, FieldPlayer playerFromBenchToField) {
@@ -53,5 +39,27 @@ public class FieldPlayerCollection {
             FieldPlayerView fpv = entry.getValue();
             fpv.invertCoords();
         }
+    }
+
+    public int teammatesCount(FieldPlayer player) {
+        int teammates = 0;
+        for(FieldPlayer p : mapViews.keySet()){
+            if(p.getTeam().equals(player.getTeam()) && !player.equals(p)){
+                teammates++;
+            }
+        }
+        return teammates;
+    }
+
+    public FieldPlayerView get(FieldPlayer player) {
+        return mapViews.get(player);
+    }
+
+    private boolean map(FieldPlayerView view){
+        return map(view.getFieldPlayer(), view);
+    }
+
+    private boolean map(FieldPlayer player, FieldPlayerView view){
+        return mapViews.put(player, view) == view;
     }
 }

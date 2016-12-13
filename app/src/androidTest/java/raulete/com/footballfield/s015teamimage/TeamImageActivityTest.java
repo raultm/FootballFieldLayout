@@ -16,6 +16,7 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.assertThat;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static raulete.com.footballfield.FFLMatchers.withDrawable;
 import static raulete.com.footballfield.FFLMatchers.withDrawableResource;
 
 @RunWith(AndroidJUnit4.class)
@@ -25,38 +26,35 @@ public class TeamImageActivityTest {
     @Rule
     public ActivityTestRule<TeamImageActivity> mActivityRule = new ActivityTestRule(TeamImageActivity.class);
 
-    @Ignore
     @Test
     public void onLocalTeamLeftSideHasImage() {
         onView(withId(R.id.activity_add_local)).perform(click());
 
-        onView(withId(R.id.field_left_team_shield)).check(matches(withDrawableResource(R.mipmap.fcb)));
+        onView(withId(R.id.field_left_team_shield)).check(matches(withDrawable(R.mipmap.fcb)));
     }
 
-    @Ignore
     @Test
     public void onGuestTeamRightSideHasImage() {
         onView(withId(R.id.activity_add_guest)).perform(click());
 
-        onView(withId(R.id.field_right_team_shield)).check(matches(withDrawableResource(R.mipmap.rmd)));
+        onView(withId(R.id.field_right_team_shield)).check(matches(withDrawable(R.mipmap.rmd)));
     }
 
-    @Ignore
     @Test
     public void onChangeFieldImagesChangeToo() {
         onView(withId(R.id.activity_add_local)).perform(click());
         onView(withId(R.id.activity_add_guest)).perform(click());
 
         // Check Images OK
-        onView(withId(R.id.field_left_team_shield)).check(matches(withDrawableResource(R.mipmap.fcb)));
-        onView(withId(R.id.field_right_team_shield)).check(matches(withDrawableResource(R.mipmap.rmd)));
+        onView(withId(R.id.field_left_team_shield)).check(matches(withDrawable(R.mipmap.fcb)));
+        onView(withId(R.id.field_right_team_shield)).check(matches(withDrawable(R.mipmap.rmd)));
 
         // Change Field
         onView(withId(R.id.activity_change_field_button)).perform(click());
 
         // Check Images Has Changed
-        onView(withId(R.id.field_left_team_shield)).check(matches(withDrawableResource(R.mipmap.rmd)));
-        onView(withId(R.id.field_right_team_shield)).check(matches(withDrawableResource(R.mipmap.fcb)));
+        onView(withId(R.id.field_left_team_shield)).check(matches(withDrawable(R.mipmap.rmd)));
+        onView(withId(R.id.field_right_team_shield)).check(matches(withDrawable(R.mipmap.fcb)));
 
     }
 

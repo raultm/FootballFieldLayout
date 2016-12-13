@@ -18,6 +18,12 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="Remove Player"
+        android:onClick="openRemovePlayer"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:text="Whole Team"
         android:onClick="openWholeTeam"/>
 

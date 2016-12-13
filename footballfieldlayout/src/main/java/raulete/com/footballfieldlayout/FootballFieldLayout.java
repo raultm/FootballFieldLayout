@@ -7,7 +7,6 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.RemoteViews;
 
@@ -20,25 +19,25 @@ import static raulete.com.footballfieldlayout.FFL.coords;
  * Example of writing a custom layout manager.  This is a fairly full-featured
  * layout manager that is relatively general, handling all layout cases.  You
  * can simplify it for more specific cases.
- * <p>
+ *
  * https://developer.android.com/reference/android/view/ViewGroup.html
- * <p>
+ *
  * onMeasure
  * All the players are going to have the same dimensions.
- * <p>
+ *
  * ______________________
  * |   D  M    |   M  D   |
  * |   D  M  F | F M  D   |
  * |G          |         G|
  * |   D  M  F | F M  D   |
  * |___D__M____|___M__D___|
- * <p>
- * <p>
+ *
+ *
  * onLayout
- * <p>
+ *
  * The position of a player always will be relative 0-100 from the field point of view to avoid
  * problems when drawing th field in different resolutions
- * <p>
+ *
  * 0           50        100
  * ______________________    0
  * |           |          |
@@ -46,16 +45,16 @@ import static raulete.com.footballfieldlayout.FFL.coords;
  * |           |          |
  * |           |          |
  * |___________|__________|  100
- * <p>
- * <p>
+ *
+ *
  * The position of the player will be referenced to the middle of the PlayerViewItself. I don't know
  * of it's gonna give problems this decision, but I need to define this now before use different
  * approaches.
- * <p>
+ *
  * If I use this approach a lot of problems to positionate, but otherwise I'll have problems when
  * strugglign agains diferent screens. The width/hight of the view doesn't need to modify the position
  * of the player over the field.
- * <p>
+ *
  * ___________
  * |           |
  * |           |
@@ -70,7 +69,7 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
     public final static int PLAYER_MOVE_ON_LONG_CLICK = 100;
     public final static int PLAYER_MOVE_ON_ADDED = 200;
 
-    private final static int NO_DELTA = -10000;
+    private final static int NO_DELTA = Integer.MIN_VALUE;
 
     private boolean vibrationFeedback = true;
 
@@ -78,10 +77,7 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
     private int MOVE_ON_ACTION = PLAYER_MOVE_ON_LONG_CLICK;
     private OnPlayerActionsCallback onPlayerActionsCallback = uselessOnPlayerCallback;
     private OnPlayerClickCallback onPlayerClickCallback = uselessOnPlayerClickCallback;
-
-
-    private List<FieldTeamView> teams = new ArrayList<>();
-
+    private FieldImageLoader imageLoader = uselessFieldImageLoader;
 
     private FieldPlayerCollection fpc = new FieldPlayerCollection();
 
@@ -95,8 +91,6 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
 
     // http://stackoverflow.com/questions/9398057/android-move-a-view-on-touch-move-action-move
     public float dX = NO_DELTA, dY = NO_DELTA;
-
-    private FieldImageLoader imageLoader = uselessFieldImageLoader;
 
     public void changeField() {
         if (leftSideTeam == LOCAL_TEAM) {
@@ -119,7 +113,6 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
     /*
      * Constructors
      */
-
     public FootballFieldLayout(Context context) {
         super(context);
     }
@@ -132,14 +125,14 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
         super(context, attrs, defStyle);
         setBackgroundResource(R.mipmap.football_field);
         addView(new FieldTeamView(getContext(), R.id.field_left_team_shield, coords(25f, 50f)));
-        addView(new FieldTeamView(getContext(), R.id.field_right_team_shield, coords(25f, 50f).invert()));
+        addView(new FieldTeamView(getContext(), R.id.field_right_team_shield, coords(25f, 50f).inverse()));
     }
 
     /*
      * Add Players
      */
     public void addPlayerLocal(FieldPlayer player) {
-        addPlayer(LOCAL_TEAM, player);
+        addLocal(player);
     }
 
     public void addPlayerLocal(FieldPlayer player, FieldCoordinates fieldCoordinates) {
@@ -230,7 +223,7 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
                     @Override
                     public void onClick(View v) {
                         onPlayerClickCallback.click(fpv);
-                        Log.i("Click", fpv.getFieldPlayer().getShortName());
+                        Log.i("Click", fpv.getFieldPlayer().getName());
                     }
                 });
                 break;
@@ -374,12 +367,12 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
         BOUNDARIES_TYPE = FieldBoundaries.BOUNDARIES_HALF_FIELD;
     }
 
-    public boolean isLocal(FieldPlayerView fpv) {
-        return fpv.getFieldPlayer().getTeam().equals(localTeam);
+    public boolean isLocal(FieldPlayer player) {
+        return player.getTeam().equals(localTeam);
     }
 
-    public boolean isGuest(FieldPlayerView fpv) {
-        return fpv.getFieldPlayer().getTeam().equals(guestTeam);
+    public boolean isGuest(FieldPlayer player) {
+        return player.getTeam().equals(guestTeam);
     }
 
     public boolean isLeftSide(FieldPlayerView fpv) {
@@ -411,7 +404,7 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
         FieldCoordinates[] coordinates = getCoordinates(players);
 
         for(int i = 0; i < players.length; i++){
-            addPlayerGuest(players[i], coordinates[i].invert());
+            addPlayerGuest(players[i], coordinates[i].inverse());
             //addPlayerGuest(players[i]);
         }
     }
@@ -450,6 +443,30 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
         }
 
         return coordinates;
+    }
+
+    public void remove(FieldPlayer player) {
+        if(fpc.teammatesCount(player) == 0) {
+            // TODO Test to add player with same role(local/guest) but different team check is OK
+            if(isLocal(player)){
+                localTeam = null;
+            }
+
+            if(isGuest(player)){
+                guestTeam = null;
+            }
+            // http://stackoverflow.com/questions/2859212/how-to-clear-an-imageview-in-android
+            int side = R.id.field_left_team_shield;
+            if (isRightSide(fpc.get(player))) {
+                side = R.id.field_right_team_shield;
+            }
+
+            FieldTeamView fieldTeamView = (FieldTeamView) findViewById(side);
+            if (fieldTeamView.getDrawable() != null) {
+                fieldTeamView.setImageDrawable(null);
+            }
+        }
+        fpc.remove(player);
     }
 
     public interface OnPlayerActionsCallback {

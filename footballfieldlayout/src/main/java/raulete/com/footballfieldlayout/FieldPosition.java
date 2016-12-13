@@ -48,16 +48,6 @@ public class FieldPosition {
         return new FieldPosition(ffl, x, y);
     }
 
-    public static final FieldPosition createDefault(FootballFieldLayout ffl) {
-        return createFromXY(ffl, 0, 0);
-    }
-
-    private static int[] getCoordinates(View view) {
-        int[] coordinates = new int[2];
-        view.getLocationOnScreen(coordinates);
-        return coordinates;
-    }
-
     private FieldPosition(FootballFieldLayout footballFieldLayout, float x, float y) {
         int[] coordinates = new int[2];
         footballFieldLayout.getLocationOnScreen(coordinates);
@@ -107,15 +97,5 @@ public class FieldPosition {
     public float getYinPx(){
         return getY() * fieldHeight / 100;
     }
-
-    public int getFieldRawX()
-    {
-        return (int) fieldRawX;
-    }
-    public int getFieldRawY()
-    {
-        return (int) fieldRawY;
-    }
-
 
 }

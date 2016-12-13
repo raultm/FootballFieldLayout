@@ -21,6 +21,7 @@ import raulete.com.footballfield.s013playerboundaries.PlayerBoundariesActivity;
 import raulete.com.footballfield.s014changefield.ChangeFieldActivity;
 import raulete.com.footballfield.s015teamimage.TeamImageActivity;
 import raulete.com.footballfield.s016wholeteam.WholeTeamActivity;
+import raulete.com.footballfield.s017removeplayer.RemovePlayerActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -92,6 +93,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void openWholeTeam(View view){
         openActivity(WholeTeamActivity.class);
+    }
+
+    public void openRemovePlayer(View view){
+        openActivity(RemovePlayerActivity.class);
     }
 
     private void openActivity(Class<?> cls){

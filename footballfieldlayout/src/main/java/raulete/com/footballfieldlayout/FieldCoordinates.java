@@ -1,7 +1,9 @@
 package raulete.com.footballfieldlayout;
 
 /**
- * Created by raulete on 2/12/16.
+ * Coordinates to use over the field.
+ *  X Axis - 0, 100
+ *  Y Axis - 0, 100
  */
 
 public class FieldCoordinates {
@@ -30,7 +32,7 @@ public class FieldCoordinates {
         return (int)y;
     }
 
-    public FieldCoordinates invert() {
+    public FieldCoordinates inverse() {
         return create(100 - x, 100 - y);
     }
 

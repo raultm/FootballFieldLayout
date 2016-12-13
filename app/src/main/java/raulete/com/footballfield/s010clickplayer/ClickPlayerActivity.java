@@ -27,7 +27,7 @@ public class ClickPlayerActivity extends AppCompatActivity {
 
             @Override
             public void click(FieldPlayerView fPlayer) {
-                Toast.makeText(ClickPlayerActivity.this, fPlayer.getFieldPlayer().getShortName(), Toast.LENGTH_LONG).show();
+                Toast.makeText(ClickPlayerActivity.this, fPlayer.getFieldPlayer().getName(), Toast.LENGTH_LONG).show();
             }
         });
 

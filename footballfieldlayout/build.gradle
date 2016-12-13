@@ -1,5 +1,29 @@
 apply plugin: 'com.android.library'
 
+ext {
+    bintrayRepo = 'FootballFieldLayout'
+    bintrayName = 'footballfieldlayout'
+
+    publishedGroupId = 'com.raulete.footballfieldlayout'
+    libraryName = 'footballfieldlayout'
+    artifact = 'footballfieldlayout'
+
+    libraryDescription = 'Custom Layout To Handle Player over Field'
+
+    siteUrl = 'https://github.com/raultm/FootballFieldLayout'
+    gitUrl = 'https://github.com/raultm/FootballFieldLayout.git'
+
+    libraryVersion = '0.5.0'
+
+    developerId = 'raultm'
+    developerName = 'Raul Tierno'
+    developerEmail = 'raultm@gmail.com'
+
+    licenseName = 'MIT License'
+    licenseUrl = 'https://opensource.org/licenses/MIT'
+    allLicenses = ["MIT"]
+}
+
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
@@ -28,4 +52,9 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:23.4.0'
     testCompile 'junit:junit:4.12'
+
 }
+
+// Place it at the end of the file
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'

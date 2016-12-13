@@ -5,12 +5,9 @@ import android.graphics.Color;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
-import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import static raulete.com.footballfieldlayout.FFL.coords;
 import static raulete.com.footballfieldlayout.FFL.position;
 
 /**
@@ -21,10 +18,9 @@ public class FieldPlayerView extends LinearLayout {
 
     private FieldPlayer fp;
     private FieldCoordinates fc;
-    private FieldPosition fposition;
 
     private int totalWeight = 10;
-    private int numberWeight = 7;
+    private int numberWeight = 7; // 70% for the number
 
     // Settled onMeasure()
     private int width;
@@ -44,9 +40,61 @@ public class FieldPlayerView extends LinearLayout {
         init();
     }
 
-    protected void invertCoords(){
-        fc = getCoords().invert();
+    public FieldPlayer getFieldPlayer() {
+        return fp;
+    }
+
+    public void setPlayer(FieldPlayer fieldPlayer) {
+        this.fp = fieldPlayer;
         init();
+    }
+
+    public FieldCoordinates getCoords() {
+        return position(getFootballFieldLayout(), getX() + getWidthDelta(), getY() + getHeightDelta()).getCoords();
+    }
+
+    /**
+     * Any layout manager that doesn't scroll will want this.
+     */
+    @Override
+    public boolean shouldDelayChildPressedState() {
+        return false;
+    }
+
+    /**
+     * Ask all children to measure themselves and compute the measurement of this
+     * layout based on the children.
+     */
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        FootballFieldLayout parent = getFootballFieldLayout();
+        if (parent.getWidth() > parent.getHeight()) {
+            width = height = parent.getHeight() / 7; // At least 5 player in each column
+        } else {
+            width = height = parent.getWidth() / 12; // At least 4 colums
+        }
+
+        // http://stackoverflow.com/questions/13394181/inflated-children-of-custom-linearlayout-dont-show-when-overriding-onmeasure
+        super.onMeasure(MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY));
+
+        FieldPosition fposition = FieldPosition.createFromXY(parent, fc.x(), fc.y());
+        fposition = parent.rectifyPosition(this, fposition);
+
+        setX(fposition.getXinPx());
+        setY(fposition.getYinPx());
+    }
+
+    @Override
+    protected LayoutParams generateDefaultLayoutParams() {
+        return new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+    }
+
+    protected FootballFieldLayout getFootballFieldLayout(){
+        return (FootballFieldLayout) this.getParent();
+    }
+
+    protected void invertCoords(){
+        setCoords(getCoords().inverse());
     }
 
     protected void setCoords(FieldCoordinates fCoordinates){
@@ -63,11 +111,7 @@ public class FieldPlayerView extends LinearLayout {
             numberTextColor = fp.getTeam().getTextColor();
         }
         addNumber(fp.getNumber());
-        addName(fp.getShortName());
-    }
-
-    public FieldPlayer getFieldPlayer() {
-        return fp;
+        addName(fp.getName());
     }
 
     private void addName(String shortName) {
@@ -109,74 +153,14 @@ public class FieldPlayerView extends LinearLayout {
 
     }
 
-    /**
-     * Any layout manager that doesn't scroll will want this.
-     */
-    @Override
-    public boolean shouldDelayChildPressedState() {
-        return false;
-    }
 
-
-    /**
-     * Ask all children to measure themselves and compute the measurement of this
-     * layout based on the children.
-     */
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        FootballFieldLayout parent = (FootballFieldLayout) this.getParent();
-        if (parent.getWidth() > parent.getHeight()) {
-            width = height = parent.getHeight() / 7; // At least 5 player in each column
-        } else {
-            width = height = parent.getWidth() / 12; // At least 4 colums
-        }
-
-        // http://stackoverflow.com/questions/13394181/inflated-children-of-custom-linearlayout-dont-show-when-overriding-onmeasure
-        super.onMeasure(MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY));
-
-        Log.i("Coords", "Coords: " + fc);
-        fposition = FieldPosition.createFromXY(parent, fc.x(), fc.y());
-        fposition = parent.rectifyPosition(this, fposition);
-
-        //setX(fposition.getXinPx() + getWidthDelta());
-        setX(fposition.getXinPx());
-        //setY(fposition.getYinPx() + getHeightDelta());
-        setY(fposition.getYinPx());
-
-        //RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) getLayoutParams();
-        //params.leftMargin = (int) fposition.getXinPx();// - (width/2);
-        //params.topMargin = (int) fposition.getYinPx();// - (height/2);
-
-        //Log.i("Coords", "Coords FC  : " + fc);
-        //Log.i("Coords", "Coords gC(): " + getCoords());
-        //Log.i("Coords", "LEFT, TOP: " + params.leftMargin + ", " + params.topMargin);
-    }
-
-    public void setPlayer(FieldPlayer fieldPlayer) {
-        this.fp = fieldPlayer;
-        init();
-    }
-
-    @Override
-    protected LayoutParams generateDefaultLayoutParams() {
-        return new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-    }
-
-    public FieldCoordinates getCoords() {
-        return position(getFootballFieldLayout(), getX() + getWidthDelta(), getY() + getHeightDelta()).getCoords();
-    }
-
-    private FootballFieldLayout getFootballFieldLayout(){
-        return (FootballFieldLayout) this.getParent();
-    }
-
-    public int getWidthDelta() {
+    // TODO Can I private these methods?
+    protected int getWidthDelta() {
         return width / 2;
     }
 
-    public int getHeightDelta() {
+    protected int getHeightDelta() {
         return height / 2;
     }
-
 
 }

@@ -5,10 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import raulete.com.footballfield.BaseFieldImageLoader;
-import raulete.com.footballfield.BaseFieldPlayer;
 import raulete.com.footballfield.R;
 import raulete.com.footballfieldlayout.FieldCoordinates;
-import raulete.com.footballfieldlayout.FieldPlayer;
 import raulete.com.footballfieldlayout.FootballFieldLayout;
 
 import static raulete.com.footballfield.BaseFieldPlayer.fcb;
@@ -43,7 +41,7 @@ public class TeamImageActivity extends AppCompatActivity {
     }
 
     public void addGuest(View view){
-        footballFieldLayout.addPlayerGuest(player("Keylor"    , "1" , rmd), FieldCoordinates.create( 5,50).invert());
+        footballFieldLayout.addPlayerGuest(player("Keylor"    , "1" , rmd), FieldCoordinates.create( 5,50).inverse());
     }
 
 

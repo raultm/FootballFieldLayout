@@ -33,6 +33,7 @@
         <activity android:name=".s014changefield.ChangeFieldActivity"></activity>
         <activity android:name=".s015teamimage.TeamImageActivity"></activity>
         <activity android:name=".s016wholeteam.WholeTeamActivity"></activity>
+        <activity android:name=".s017removeplayer.RemovePlayerActivity"></activity>
     </application>
 
 </manifest>

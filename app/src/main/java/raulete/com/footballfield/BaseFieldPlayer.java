@@ -72,17 +72,12 @@ public class BaseFieldPlayer implements FieldPlayer {
     }
 
     @Override
-    public boolean isPositioned() {
-        return false;
-    }
-
-    @Override
     public String getNumber() {
         return number;
     }
 
     @Override
-    public String getShortName() {
+    public String getName() {
         return name;
     }
 
