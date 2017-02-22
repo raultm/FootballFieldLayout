@@ -44,6 +44,10 @@ public class FieldPosition {
         return createFromXY(ffl, positionX, positionY);
     }
 
+    private static String info(float x, float y, float positionX, float positionY){
+        return "Raw (" + x + "," + y + ")" + "/" + "% (" + positionX + "," + positionY + ")";
+    }
+
     public static final FieldPosition createFromXY(FootballFieldLayout ffl, float x, float y) {
         return new FieldPosition(ffl, x, y);
     }

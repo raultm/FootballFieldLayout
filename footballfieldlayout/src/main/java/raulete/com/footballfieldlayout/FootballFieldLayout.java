@@ -268,7 +268,11 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
                 }
                 break;
             case MotionEvent.ACTION_UP:
-                onPlayerActionsCallback.moved(fpv, fposition);
+                if (onPlayerActionsCallback.moving(fpv, fposition)) {
+                    fposition = move(fpv, event);
+                }
+                FieldPosition fieldPositionPlayer = FieldPosition.createFromRawXY(this, fposition.getXinPx() + fpv.getWidthDelta(), fposition.getYinPx() + fpv.getHeightDelta());
+                onPlayerActionsCallback.moved(fpv, fieldPositionPlayer);
                 fpv.setCoords(fpv.getCoords());
                 view.setOnTouchListener(null);
                 activateOnTouchListener(view);
@@ -314,18 +318,18 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
         dY = NO_DELTA;
     }
 
-    private void move(FieldPlayerView view, MotionEvent event) {
+    private FieldPosition move(FieldPlayerView view, MotionEvent event) {
         if (dX == NO_DELTA || dY == NO_DELTA) {
             setDelta(view, event);
         }
-        move(view, event.getRawX() + dX, event.getRawY() + dY);
+        return move(view, event.getRawX() + dX, event.getRawY() + dY);
     }
 
-    public void move(FieldPlayerView view, float x, float y) {
-        move(view, x, y, 0);
+    public FieldPosition move(FieldPlayerView view, float x, float y) {
+        return move(view, x, y, 0);
     }
 
-    public void move(FieldPlayerView fpv, float x, float y, int duration) {
+    public FieldPosition move(FieldPlayerView fpv, float x, float y, int duration) {
         FieldPosition fposition = FieldPosition.createFromRawXY(this, x, y);
         fposition = rectifyPosition(fpv, fposition);
 
@@ -337,6 +341,7 @@ public class FootballFieldLayout extends RelativeLayout implements View.OnTouchL
                 .setDuration(duration)
                 .start();
 
+        return fposition;
     }
 
 
