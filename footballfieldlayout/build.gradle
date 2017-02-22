@@ -13,7 +13,7 @@ ext {
     siteUrl = 'https://github.com/raultm/FootballFieldLayout'
     gitUrl = 'https://github.com/raultm/FootballFieldLayout.git'
 
-    libraryVersion = '0.5.0'
+    libraryVersion = '0.5.1'
 
     developerId = 'raultm'
     developerName = 'Raul Tierno'

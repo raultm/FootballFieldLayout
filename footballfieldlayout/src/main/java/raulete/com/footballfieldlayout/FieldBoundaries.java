@@ -26,7 +26,6 @@ public class FieldBoundaries {
             return new FieldBoundaries(
                     0 + fpv.getWidthDelta(), 0 + fpv.getHeightDelta(),
                     ffl.getWidth() - fpv.getWidthDelta(), ffl.getHeight() - fpv.getHeightDelta());
-º
         }
 
         if(boundariesType == BOUNDARIES_HALF_FIELD){
